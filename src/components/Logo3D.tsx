@@ -2,17 +2,17 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, useScroll, Float } from '@react-three/drei';
+import { useGLTF, Float } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface Logo3DProps {
   isMobile: boolean;
+  progress?: any;
 }
 
-export function Logo3D({ isMobile }: Logo3DProps) {
+export function Logo3D({ isMobile, progress }: Logo3DProps) {
   const groupRef = useRef<THREE.Group>(null);
   const { scene } = useGLTF('/hitem3d.glb');
-  const scroll = useScroll();
   const { viewport } = useThree();
   
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -33,7 +33,8 @@ export function Logo3D({ isMobile }: Logo3DProps) {
   useFrame((state, delta) => {
     if (!groupRef.current) return;
 
-    const scrollOffset = scroll.offset;
+    // Use external progress if provided, otherwise default to 0
+    const scrollOffset = progress ? progress.get() : 0;
     
     const baseScale = isMobile ? 1.8 : 2.5;
     const minScale = isMobile ? 0.4 : 0.5;
