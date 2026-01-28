@@ -34,10 +34,10 @@ function LogoFallback() {
   return (
     <div className="w-full h-full flex items-center justify-center bg-transparent">
       <div className="relative">
-        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white/30 to-teal-200/30 flex items-center justify-center animate-pulse border border-white/10">
-          <span className="text-5xl font-black bg-gradient-to-r from-white to-teal-100 bg-clip-text text-transparent">M</span>
+        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white/60 to-teal-50/60 flex items-center justify-center animate-pulse border border-white/20">
+          <span className="text-5xl font-black bg-gradient-to-r from-white to-white bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">M</span>
         </div>
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-teal-200/20 blur-2xl animate-pulse" />
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 to-white/10 blur-3xl animate-pulse" />
       </div>
     </div>
   );

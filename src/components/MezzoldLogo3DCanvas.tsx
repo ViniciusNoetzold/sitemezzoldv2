@@ -51,7 +51,7 @@ function Model() {
 
       if (materialRef.current) {
         const pulse = (Math.sin(timeRef.current * 1.2) + 1) * 0.5;
-        materialRef.current.emissiveIntensity = 0.8 + pulse * 0.4 + (isDragging ? 0.6 : 0);
+        materialRef.current.emissiveIntensity = 1.2 + pulse * 0.6 + (isDragging ? 0.8 : 0);
       }
     });
 
@@ -81,13 +81,13 @@ function Model() {
           if (child instanceof THREE.Mesh) {
             const material = new THREE.MeshPhysicalMaterial({
               color: new THREE.Color('#ffffff'),
-              metalness: 0.6,
-              roughness: 0.2,
-              envMapIntensity: 2,
+              metalness: 0.4,
+              roughness: 0.1,
+              envMapIntensity: 4,
               emissive: new THREE.Color('#ffffff'),
-              emissiveIntensity: 0.8,
+              emissiveIntensity: 1.2,
               clearcoat: 1,
-              clearcoatRoughness: 0.1,
+              clearcoatRoughness: 0,
               reflectivity: 1,
             });
             child.material = material;
@@ -121,17 +121,17 @@ function Model() {
     function Lights() {
       return (
         <>
-          <ambientLight intensity={1.5} />
-          <directionalLight position={[5, 5, 5]} intensity={5} color="#ffffff" />
-          <directionalLight position={[-5, 3, -5]} intensity={3} color="#ffffff" />
-          <pointLight position={[0, 4, 4]} intensity={5} color="#ffffff" />
-          <pointLight position={[-3, -2, 3]} intensity={2.5} color="#ccfbf1" />
-          <pointLight position={[3, -2, 3]} intensity={2.5} color="#ccfbf1" />
+          <ambientLight intensity={2.5} />
+          <directionalLight position={[5, 5, 5]} intensity={8} color="#ffffff" />
+          <directionalLight position={[-5, 3, -5]} intensity={5} color="#ffffff" />
+          <pointLight position={[0, 4, 4]} intensity={10} color="#ffffff" />
+          <pointLight position={[-3, -2, 3]} intensity={4} color="#ccfbf1" />
+          <pointLight position={[3, -2, 3]} intensity={4} color="#ccfbf1" />
           <spotLight 
             position={[0, 5, 0]} 
             angle={0.5} 
             penumbra={1} 
-            intensity={4} 
+            intensity={8} 
             color="#ffffff" 
           />
         </>
