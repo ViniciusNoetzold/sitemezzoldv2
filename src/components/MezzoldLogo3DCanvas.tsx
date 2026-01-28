@@ -164,4 +164,6 @@ export function MezzoldLogo3DCanvas() {
   );
 }
 
-useGLTF.preload('/logomezzold3d.glb');
+if (typeof window !== 'undefined') {
+  useGLTF.preload('/logomezzold3d.glb');
+}

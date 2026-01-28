@@ -173,4 +173,6 @@ export function LogoShowcase() {
   );
 }
 
-useGLTF.preload('/hitem3d.glb');
+if (typeof window !== 'undefined') {
+  useGLTF.preload('/hitem3d.glb');
+}

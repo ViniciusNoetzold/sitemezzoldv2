@@ -128,4 +128,6 @@ export function Logo3D({ isMobile }: Logo3DProps) {
   );
 }
 
-useGLTF.preload('/hitem3d.glb');
+if (typeof window !== 'undefined') {
+  useGLTF.preload('/hitem3d.glb');
+}
