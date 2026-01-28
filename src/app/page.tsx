@@ -1,24 +1,27 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Portfolio } from "@/components/Portfolio";
 import { Services } from "@/components/Services";
 import { Footer } from "@/components/Footer";
 import { LogoShowcase } from "@/components/LogoShowcase";
-import { DotScreenShader } from "@/components/ui/dot-shader-background";
 import { useEffect, useState } from "react";
 import Lenis from "lenis";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const { scrollYProgress } = useScroll();
+  
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
   });
+
+  const darkeningOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 0.8]);
+  const heroGlowOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
     setMounted(true);
@@ -47,24 +50,39 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <main className="relative min-h-screen bg-transparent selection:bg-electric-red selection:text-white overflow-hidden">
+    <main className="relative min-h-screen bg-[#050505] selection:bg-electric-red selection:text-white overflow-hidden">
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-electric-red z-[100] origin-left"
         style={{ scaleX }}
       />
 
+      {/* Persistent Background Gradient System */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        {/* Subtle top ambient glow */}
+        <motion.div 
+          style={{ opacity: heroGlowOpacity }}
+          className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-electric-red/10 blur-[150px] rounded-full"
+        />
+        <motion.div 
+          style={{ opacity: heroGlowOpacity }}
+          className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-emerald-green/5 blur-[120px] rounded-full"
+        />
+        
+        {/* Darkening Overlay as we scroll */}
+        <motion.div 
+          style={{ opacity: darkeningOpacity }}
+          className="absolute inset-0 bg-black/90"
+        />
+      </div>
+
       <Navbar />
 
-      <div className="flex flex-col gap-0">
+      <div className="flex flex-col gap-0 relative z-10">
         <Hero />
 
         <div className="relative">
-          <div className="fixed inset-0 z-0 opacity-30 pointer-events-auto">
-            <DotScreenShader />
-          </div>
-          
           <div className="relative z-10">
-            <section id="who-we-are" className="py-24 px-6 relative z-10 bg-transparent pointer-events-none">
+            <section id="who-we-are" className="py-24 px-6 relative z-10 bg-transparent">
               <div className="max-w-5xl mx-auto text-center space-y-6">
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -94,7 +112,7 @@ export default function Home() {
               </div>
             </section>
 
-            <div className="pointer-events-none">
+            <div>
               <Services />
               <Portfolio />
             </div>
@@ -122,7 +140,7 @@ export default function Home() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-12 py-5 rounded-full bg-white text-black font-black text-lg hover:shadow-[0_0_40px_rgba(6,182,212,0.35)] transition-all pointer-events-auto"
+                    className="px-12 py-5 rounded-full bg-white text-black font-black text-lg hover:shadow-[0_0_40px_rgba(6,182,212,0.35)] transition-all"
                   >
                     Agendar uma Conversa
                   </motion.button>
@@ -130,7 +148,7 @@ export default function Home() {
               </div>
             </section>
 
-            <div className="pointer-events-none">
+            <div>
               <LogoShowcase />
               <Footer />
             </div>
