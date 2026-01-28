@@ -6,6 +6,7 @@ import { AnimatedHeroText } from './ui/animated-hero';
 import { MezzoldLogo3D } from './MezzoldLogo3D';
 import { WebGLShader } from './ui/web-gl-shader';
 import { LiquidButton } from './ui/liquid-glass-button';
+import { GlowingEffect } from './ui/glowing-effect';
 
 export function Hero() {
   const { scrollY } = useScroll();
@@ -74,31 +75,39 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-          {[
-            {
-              title: 'Experiências Fluidas',
-              text: 'Interfaces ricas em parallax e transições suaves impulsionadas por motion design.',
-            },
-            {
-              title: 'Precisão Neon',
-              text: 'Acentos em azul elétrico e esmeralda com glassmorphism para profundidade futurista.',
-            },
-            {
-              title: 'Performance de Elite',
-              text: 'Otimizado para velocidade, escala e excelência técnica a longo prazo.',
-            },
-          ].map((item) => (
-            <motion.div
-              key={item.title}
-              whileHover={{ y: -6 }}
-              className="glass rounded-3xl p-6 border border-white/10 backdrop-blur-xl"
-            >
-              <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{item.text}</p>
-            </motion.div>
-          ))}
-        </div>
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+            {[
+              {
+                title: 'Experiências Fluidas',
+                text: 'Interfaces ricas em parallax e transições suaves impulsionadas por motion design.',
+              },
+              {
+                title: 'Precisão Neon',
+                text: 'Acentos em azul elétrico e esmeralda com glassmorphism para profundidade futurista.',
+              },
+              {
+                title: 'Performance de Elite',
+                text: 'Otimizado para velocidade, escala e excelência técnica a longo prazo.',
+              },
+            ].map((item) => (
+              <motion.div
+                key={item.title}
+                whileHover={{ y: -6 }}
+                className="relative glass rounded-3xl p-6 border border-white/10 backdrop-blur-xl"
+              >
+                <GlowingEffect
+                  spread={40}
+                  glow={true}
+                  disabled={false}
+                  proximity={64}
+                  inactiveZone={0.01}
+                  borderWidth={2}
+                />
+                <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{item.text}</p>
+              </motion.div>
+            ))}
+          </div>
       </motion.div>
     </section>
   );
