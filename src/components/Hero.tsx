@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import dynamic from 'next/dynamic';
+import { AnimatedHeroText } from './ui/animated-hero';
 
 const MezzoldLogo3D = dynamic(() => import('./MezzoldLogo3D').then(mod => ({ default: mod.MezzoldLogo3D })), {
   ssr: false,
@@ -37,6 +38,18 @@ export function Hero() {
           className="relative"
         >
           <MezzoldLogo3D />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="mt-6"
+        >
+          <AnimatedHeroText 
+            prefix="Criamos"
+            titles={["inovação", "performance", "design", "precisão", "resultados"]}
+          />
         </motion.div>
 
         <motion.p
