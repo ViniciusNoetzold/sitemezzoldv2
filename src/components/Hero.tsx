@@ -23,17 +23,14 @@ export function Hero() {
             Mezzold Studio · Software House Premium
           </motion.p>
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: 'easeOut', delay: 0.1 }}
-          className="relative flex items-center justify-center"
-        >
-          <div className="absolute inset-0 z-0 scale-150 opacity-60">
-            <WebGLShader />
-          </div>
-          <MezzoldLogo3D />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: 'easeOut', delay: 0.1 }}
+            className="relative flex items-center justify-center"
+          >
+            <MezzoldLogo3D />
+          </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -7,6 +7,7 @@ import { Portfolio } from "@/components/Portfolio";
 import { Services } from "@/components/Services";
 import { Footer } from "@/components/Footer";
 import { LogoShowcase } from "@/components/LogoShowcase";
+import { WebGLShader } from "@/components/ui/web-gl-shader";
 import { useEffect, useState } from "react";
 import Lenis from "lenis";
 
@@ -20,8 +21,8 @@ export default function Home() {
     restDelta: 0.001,
   });
 
-  const darkeningOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 0.8]);
-  const heroGlowOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const darkeningOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+  const heroGlowOpacity = useTransform(scrollYProgress, [0, 0.5], [0.6, 0]);
 
   useEffect(() => {
     setMounted(true);
@@ -50,29 +51,34 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <main className="relative min-h-screen bg-[#050505] selection:bg-electric-red selection:text-white overflow-hidden">
+    <main className="relative min-h-screen bg-[#020202] selection:bg-electric-red selection:text-white overflow-hidden">
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-electric-red z-[100] origin-left"
         style={{ scaleX }}
       />
 
-      {/* Persistent Background Gradient System */}
+      {/* Unified Background System */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        {/* Subtle top ambient glow */}
+        {/* The main shader background */}
         <motion.div 
           style={{ opacity: heroGlowOpacity }}
-          className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-electric-red/10 blur-[150px] rounded-full"
-        />
-        <motion.div 
-          style={{ opacity: heroGlowOpacity }}
-          className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-emerald-green/5 blur-[120px] rounded-full"
-        />
+          className="absolute inset-0 scale-110"
+        >
+          <WebGLShader />
+        </motion.div>
+
+        {/* Top-to-Bottom Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/50 to-[#020202]" />
         
-        {/* Darkening Overlay as we scroll */}
+        {/* Smooth Darkening Overlay on Scroll */}
         <motion.div 
           style={{ opacity: darkeningOpacity }}
-          className="absolute inset-0 bg-black/90"
+          className="absolute inset-0 bg-[#020202]"
         />
+
+        {/* Persistent subtle glows */}
+        <div className="absolute top-[-10%] left-[-5%] w-[50%] h-[50%] bg-electric-red/5 blur-[120px] rounded-full opacity-50" />
+        <div className="absolute top-[-5%] right-[-5%] w-[40%] h-[40%] bg-emerald-green/5 blur-[100px] rounded-full opacity-30" />
       </div>
 
       <Navbar />
