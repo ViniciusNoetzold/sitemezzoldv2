@@ -78,65 +78,65 @@ function Model() {
 
   useEffect(() => {
     scene.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        const material = new THREE.MeshPhysicalMaterial({
-          color: new THREE.Color('#0d9488'),
-          metalness: 0.9,
-          roughness: 0.08,
-          envMapIntensity: 3,
-          emissive: new THREE.Color('#14b8a6'),
-          emissiveIntensity: 0.4,
-          clearcoat: 1,
-          clearcoatRoughness: 0.1,
-          reflectivity: 1,
-        });
-        child.material = material;
-        materialRef.current = material;
-      }
-    });
-  }, [scene]);
+        if (child instanceof THREE.Mesh) {
+          const material = new THREE.MeshPhysicalMaterial({
+            color: new THREE.Color('#ffffff'),
+            metalness: 0.8,
+            roughness: 0.12,
+            envMapIntensity: 4,
+            emissive: new THREE.Color('#e2e8f0'),
+            emissiveIntensity: 0.2,
+            clearcoat: 1,
+            clearcoatRoughness: 0.1,
+            reflectivity: 1,
+          });
+          child.material = material;
+          materialRef.current = material;
+        }
+      });
+    }, [scene]);
 
-  return (
-    <Float
-      speed={1.5}
-      rotationIntensity={0.2}
-      floatIntensity={0.8}
-      floatingRange={[-0.15, 0.15]}
-    >
-      <group 
-        ref={modelRef} 
-        scale={3} 
-        rotation={[0, 0, 0]}
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        onPointerMove={handlePointerMove}
-        style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+    return (
+      <Float
+        speed={1.5}
+        rotationIntensity={0.2}
+        floatIntensity={0.8}
+        floatingRange={[-0.15, 0.15]}
       >
-        <primitive object={scene} />
-      </group>
-    </Float>
-  );
-}
+        <group 
+          ref={modelRef} 
+          scale={3} 
+          rotation={[0, 0, 0]}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onPointerMove={handlePointerMove}
+          style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+        >
+          <primitive object={scene} />
+        </group>
+      </Float>
+    );
+  }
 
-function Lights() {
-  return (
-    <>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={2.5} color="#ffffff" />
-      <directionalLight position={[-5, 3, -5]} intensity={1} color="#14b8a6" />
-      <pointLight position={[0, 4, 4]} intensity={2} color="#06b6d4" />
-      <pointLight position={[-3, -2, 3]} intensity={0.8} color="#10b981" />
-      <pointLight position={[3, -2, 3]} intensity={0.8} color="#14b8a6" />
-      <spotLight 
-        position={[0, 5, 0]} 
-        angle={0.5} 
-        penumbra={1} 
-        intensity={1.5} 
-        color="#22d3ee" 
-      />
-    </>
-  );
-}
+  function Lights() {
+    return (
+      <>
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[5, 5, 5]} intensity={3} color="#ffffff" />
+        <directionalLight position={[-5, 3, -5]} intensity={2} color="#ffffff" />
+        <pointLight position={[0, 4, 4]} intensity={3} color="#ffffff" />
+        <pointLight position={[-3, -2, 3]} intensity={1.5} color="#ccfbf1" />
+        <pointLight position={[3, -2, 3]} intensity={1.5} color="#ccfbf1" />
+        <spotLight 
+          position={[0, 5, 0]} 
+          angle={0.5} 
+          penumbra={1} 
+          intensity={2} 
+          color="#ffffff" 
+        />
+      </>
+    );
+  }
 
 export function MezzoldLogo3DCanvas() {
   return (
@@ -164,6 +164,4 @@ export function MezzoldLogo3DCanvas() {
   );
 }
 
-if (typeof window !== 'undefined') {
-  useGLTF.preload('/logomezzold3d.glb');
-}
+useGLTF.preload('/logomezzold3d.glb');

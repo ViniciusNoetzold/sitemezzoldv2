@@ -8,7 +8,6 @@ import { Services } from "@/components/Services";
 import { Footer } from "@/components/Footer";
 import { LogoShowcase } from "@/components/LogoShowcase";
 import { WebGLShader } from "@/components/ui/web-gl-shader";
-import { Scene3D } from "@/components/Scene3D";
 import { useEffect, useState } from "react";
 import Lenis from "lenis";
 
@@ -59,7 +58,7 @@ export default function Home() {
       />
 
       {/* Unified Background System */}
-      <div className="fixed inset-0 z-[-10] pointer-events-none">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         {/* The main shader background */}
         <motion.div 
           style={{ opacity: heroGlowOpacity }}
@@ -81,8 +80,6 @@ export default function Home() {
         <div className="absolute top-[-10%] left-[-5%] w-[50%] h-[50%] bg-electric-red/5 blur-[120px] rounded-full opacity-50" />
         <div className="absolute top-[-5%] right-[-5%] w-[40%] h-[40%] bg-emerald-green/5 blur-[100px] rounded-full opacity-30" />
       </div>
-
-      <Scene3D progress={scrollYProgress} />
 
       <Navbar />
 

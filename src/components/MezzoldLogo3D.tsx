@@ -74,13 +74,13 @@ export function MezzoldLogo3D() {
         </Suspense>
       </ErrorBoundary>
       
-      {/* Decorative gradient glow */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen"
-        style={{ 
-          background: 'radial-gradient(circle at center, rgba(20,184,166,0.15) 0%, transparent 60%)' 
-        }}
-      />
+        {/* Decorative gradient glow */}
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-30 mix-blend-screen"
+          style={{ 
+            background: 'radial-gradient(circle at center, rgba(204,251,241,0.2) 0%, transparent 60%)' 
+          }}
+        />
     </div>
   );
 }
