@@ -3,8 +3,9 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { AnimatedHeroText } from './ui/animated-hero';
-
 import { MezzoldLogo3D } from './MezzoldLogo3D';
+import { WebGLShader } from './ui/web-gl-shader';
+import { LiquidButton } from './ui/liquid-glass-button';
 
 export function Hero() {
   const { scrollY } = useScroll();
@@ -26,8 +27,11 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: 'easeOut', delay: 0.1 }}
-          className="relative"
+          className="relative flex items-center justify-center"
         >
+          <div className="absolute inset-0 z-0 scale-150 opacity-60">
+            <WebGLShader />
+          </div>
           <MezzoldLogo3D />
         </motion.div>
 
@@ -52,21 +56,25 @@ export function Hero() {
           Construímos plataformas ultra-rápidas e com design inovador que parecem vivas—feitas para marcas SaaS e digital-first ambiciosas.
         </motion.p>
 
-        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="px-10 py-4 rounded-full bg-white text-black font-bold tracking-wide hover:shadow-[0_0_40px_rgba(6,182,212,0.5)] transition-all"
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
           >
-            Iniciar Projeto
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="px-10 py-4 rounded-full border border-white/20 text-white font-bold tracking-wide bg-white/5 backdrop-blur-xl hover:border-cyan-bright/60 hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] transition-all"
+            <LiquidButton className="text-white border border-white/10 rounded-full" size={'xl'}>
+              Iniciar Projeto
+            </LiquidButton>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
           >
-            Ver Portfólio
-          </motion.button>
+            <LiquidButton variant="outline" className="text-white/70 border border-white/5 rounded-full backdrop-blur-md" size={'xl'}>
+              Ver Portfólio
+            </LiquidButton>
+          </motion.div>
         </div>
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
