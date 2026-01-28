@@ -4,24 +4,24 @@ import { motion } from 'framer-motion';
 
 const dashboardPillars = [
   {
-    title: 'Revenue Intelligence',
-    detail: 'Track MRR, NRR, and cohort health with a single pane of glass.',
+    title: 'Inteligência de Receita',
+    detail: 'Acompanhe MRR, NRR e saúde de cohort em uma única visão.',
     tag: 'MRR · NRR · LTV',
   },
   {
-    title: 'Growth Operations',
-    detail: 'Activation, retention, and lifecycle views for rapid iteration.',
-    tag: 'Activation · Retention',
+    title: 'Operações de Crescimento',
+    detail: 'Visões de ativação, retenção e ciclo de vida para iteração rápida.',
+    tag: 'Ativação · Retenção',
   },
   {
-    title: 'Customer Pulse',
-    detail: 'Behavioral insights layered with narrative-ready reporting.',
-    tag: 'Engagement · Insights',
+    title: 'Pulso do Cliente',
+    detail: 'Insights comportamentais com relatórios prontos para narrativa.',
+    tag: 'Engajamento · Insights',
   },
   {
-    title: 'Executive Mode',
-    detail: 'Board-ready snapshots that surface the signal instantly.',
-    tag: 'Runway · Forecasts',
+    title: 'Modo Executivo',
+    detail: 'Snapshots prontos para o board que revelam o sinal instantaneamente.',
+    tag: 'Runway · Previsões',
   },
 ];
 
@@ -31,30 +31,29 @@ export function Services() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col items-center text-center mb-16 space-y-6">
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-xs md:text-sm uppercase tracking-[0.4em] text-white/50"
-          >
-            Expert Dashboards
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-black text-white"
-          >
-            Glassmorphism Control Rooms
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-lg text-white/50 max-w-3xl"
-          >
-            SaaS-grade dashboard systems inspired by platforms like NutriFuel, blending cinematic depth with
-            decision-ready clarity.
-          </motion.p>
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-xs md:text-sm uppercase tracking-[0.4em] text-white/50"
+            >
+              Dashboards Especializados
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-6xl font-black text-white"
+            >
+              Salas de Controle em Glassmorphism
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-lg text-white/50 max-w-3xl"
+            >
+              Sistemas de dashboard SaaS-grade inspirados em plataformas como NutriFuel, combinando profundidade cinematográfica com clareza para tomada de decisão.
+            </motion.p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1.25fr] gap-10 items-stretch">
@@ -65,25 +64,24 @@ export function Services() {
             className="glass rounded-[2.5rem] border border-white/10 p-10 md:p-12 flex flex-col justify-between"
           >
             <div className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.4em] text-white/50">Dashboard Core</p>
-              <h3 className="text-3xl md:text-4xl font-black text-white">Executive-ready analytics with cinematic depth.</h3>
-              <p className="text-white/55 text-lg leading-relaxed">
-                We compose layered, glass-based layouts with real-time signals, multi-tenant filters, and immersive
-                motion that keeps teams aligned.
-              </p>
-            </div>
-            <div className="mt-10 grid grid-cols-2 gap-4">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-6">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/40">Live Signal</p>
-                <p className="mt-3 text-2xl font-bold text-white">98.6%</p>
-                <p className="text-white/40 text-sm">Uptime</p>
+                <p className="text-xs uppercase tracking-[0.4em] text-white/50">Dashboard Core</p>
+                <h3 className="text-3xl md:text-4xl font-black text-white">Analytics prontos para executivos com profundidade cinematográfica.</h3>
+                <p className="text-white/55 text-lg leading-relaxed">
+                  Criamos layouts em camadas baseados em glass com sinais em tempo real, filtros multi-tenant e motion imersivo que mantém equipes alinhadas.
+                </p>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-6">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/40">Pipeline</p>
-                <p className="mt-3 text-2xl font-bold text-white">$2.4M</p>
-                <p className="text-white/40 text-sm">Forecast</p>
+              <div className="mt-10 grid grid-cols-2 gap-4">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-6">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/40">Sinal ao Vivo</p>
+                  <p className="mt-3 text-2xl font-bold text-white">98.6%</p>
+                  <p className="text-white/40 text-sm">Uptime</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-6">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/40">Pipeline</p>
+                  <p className="mt-3 text-2xl font-bold text-white">R$2.4M</p>
+                  <p className="text-white/40 text-sm">Previsão</p>
+                </div>
               </div>
-            </div>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

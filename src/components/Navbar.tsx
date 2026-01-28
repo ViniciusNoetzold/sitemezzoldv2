@@ -16,16 +16,16 @@ export function Navbar() {
       </div>
       
       <div className="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">
-        <a href="#portfolio" className="hover:text-white transition-colors">Portfolio</a>
-        <a href="#services" className="hover:text-white transition-colors">Expertise</a>
-        <a href="#about" className="hover:text-white transition-colors">Studio</a>
-      </div>
+          <a href="#portfolio" className="hover:text-white transition-colors">Portfólio</a>
+          <a href="#services" className="hover:text-white transition-colors">Expertise</a>
+          <a href="#about" className="hover:text-white transition-colors">Estúdio</a>
+        </div>
 
-      <div className="h-4 w-px bg-white/10" />
+        <div className="h-4 w-px bg-white/10" />
 
-        <MagneticButton className="scale-70 origin-right">
-        Let's Talk
-      </MagneticButton>
+          <MagneticButton className="scale-70 origin-right">
+          Fale Conosco
+        </MagneticButton>
     </motion.nav>
   );
 }

@@ -68,7 +68,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="text-xs md:text-sm uppercase tracking-[0.4em] text-white/50"
             >
-              Who we are
+              Quem Somos
             </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -76,7 +76,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="text-3xl md:text-5xl font-black text-white"
             >
-              A compact studio for ambitious SaaS teams.
+              Um estúdio compacto para equipes SaaS ambiciosas.
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -85,8 +85,7 @@ export default function Home() {
               transition={{ delay: 0.1 }}
               className="text-base md:text-lg text-white/55 max-w-3xl mx-auto"
             >
-              We blend product strategy, high-velocity engineering, and cinematic UI motion to ship platforms that feel
-              inevitable.
+              Unimos estratégia de produto, engenharia de alta velocidade e motion UI cinematográfico para criar plataformas que parecem inevitáveis.
             </motion.p>
           </div>
         </section>
@@ -103,7 +102,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="text-4xl md:text-6xl font-black mb-8 text-white"
               >
-                Ready to Build the <span className="text-emerald-green">Next</span> Breakthrough?
+                Pronto para Construir o <span className="text-emerald-green">Próximo</span> Grande Passo?
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -112,14 +111,14 @@ export default function Home() {
                 transition={{ delay: 0.2 }}
                 className="text-lg text-white/60 mb-12 max-w-3xl mx-auto"
               >
-                Partner with Mezzold Studio for world-class engineering, fluid UI motion, and elite product strategy.
+                Parceria com Mezzold Studio para engenharia de classe mundial, motion UI fluido e estratégia de produto de elite.
               </motion.p>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-12 py-5 rounded-full bg-white text-black font-black text-lg hover:shadow-[0_0_40px_rgba(6,182,212,0.35)] transition-all"
               >
-                Book a Discovery Call
+                Agendar uma Conversa
               </motion.button>
             </div>
           </div>
