@@ -23,20 +23,20 @@ export function AnimatedHeroText({
       } else {
         setTitleNumber(titleNumber + 1);
       }
-    }, 2000);
+    }, 3500);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, titles]);
 
   return (
     <div className={`flex gap-2 flex-col items-center ${className}`}>
-      <h2 className="text-3xl md:text-5xl lg:text-6xl tracking-tight text-center font-bold text-white">
-        <span className="text-white/80">{prefix}</span>
-        <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 h-[1.2em]">
-          &nbsp;
-          {titles.map((title, index) => (
-            <motion.span
-              key={index}
-              className="absolute font-black bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent"
+        <h2 className="text-3xl md:text-5xl lg:text-6xl tracking-tight text-center font-bold text-white flex flex-col items-center justify-center">
+          <span className="text-white/80">{prefix}</span>
+          <span className="relative flex w-full min-w-[280px] md:min-w-[400px] justify-center overflow-hidden text-center h-[1.4em] py-1 px-4">
+            &nbsp;
+            {titles.map((title, index) => (
+              <motion.span
+                key={index}
+                className="absolute font-black bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent whitespace-nowrap"
                 initial={{ opacity: 0, y: -100 }}
               transition={{ type: "spring", stiffness: 50 }}
               animate={

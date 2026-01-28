@@ -11,23 +11,23 @@ function Model() {
   const materialRef = useRef<THREE.MeshPhysicalMaterial | null>(null);
   const timeRef = useRef(0);
   
-  useFrame((_, delta) => {
-    if (!modelRef.current) return;
-    timeRef.current += delta;
-    
-    const breathe = Math.sin(timeRef.current * 0.8) * 0.025;
-    modelRef.current.scale.setScalar(3 + breathe);
-    
-    const tiltX = Math.sin(timeRef.current * 0.5) * 0.025;
-    const tiltZ = Math.cos(timeRef.current * 0.4) * 0.015;
-    modelRef.current.rotation.x = tiltX;
-    modelRef.current.rotation.z = tiltZ;
-
-    if (materialRef.current) {
-      const pulse = (Math.sin(timeRef.current * 2) + 1) * 0.5;
-      materialRef.current.emissiveIntensity = 0.3 + pulse * 0.4;
-    }
-  });
+    useFrame((_, delta) => {
+      if (!modelRef.current) return;
+      timeRef.current += delta;
+      
+      const breathe = Math.sin(timeRef.current * 0.4) * 0.025;
+      modelRef.current.scale.setScalar(3 + breathe);
+      
+      const tiltX = Math.sin(timeRef.current * 0.3) * 0.025;
+      const tiltZ = Math.cos(timeRef.current * 0.2) * 0.015;
+      modelRef.current.rotation.x = tiltX;
+      modelRef.current.rotation.z = tiltZ;
+  
+      if (materialRef.current) {
+        const pulse = (Math.sin(timeRef.current * 1.2) + 1) * 0.5;
+        materialRef.current.emissiveIntensity = 0.3 + pulse * 0.4;
+      }
+    });
 
   useEffect(() => {
     scene.traverse((child) => {
@@ -51,7 +51,7 @@ function Model() {
 
   return (
     <Float
-      speed={2}
+      speed={1}
       rotationIntensity={0}
       floatIntensity={0.5}
       floatingRange={[-0.12, 0.12]}
