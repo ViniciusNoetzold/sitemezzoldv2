@@ -59,7 +59,7 @@ export default function Home() {
       />
 
       {/* Unified Background System */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
+      <div className="fixed inset-0 z-[-10] pointer-events-none">
         {/* The main shader background */}
         <motion.div 
           style={{ opacity: heroGlowOpacity }}
