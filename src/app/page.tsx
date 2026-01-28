@@ -1,16 +1,18 @@
 "use client";
 
 import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Portfolio } from "@/components/Portfolio";
 import { Services } from "@/components/Services";
 import { Footer } from "@/components/Footer";
 import { LogoShowcase } from "@/components/LogoShowcase";
-import { WebGLShader } from "@/components/ui/web-gl-shader";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { useEffect, useState } from "react";
 import Lenis from "lenis";
+
+const Dither = dynamic(() => import("@/components/ui/dither"), { ssr: false });
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -24,7 +26,6 @@ export default function Home() {
   });
 
   const darkeningOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
-  const heroGlowOpacity = useTransform(scrollYProgress, [0, 0.5], [0.6, 0]);
 
   useEffect(() => {
     setMounted(true);
@@ -85,27 +86,31 @@ export default function Home() {
         />
 
       {/* Unified Background System */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        {/* The main shader background */}
-        <motion.div 
-          style={{ opacity: heroGlowOpacity }}
-          className="absolute inset-0 scale-110"
+      <div className="fixed inset-0 z-0">
+        <div 
+          className="absolute inset-0"
+          style={{ width: '100%', height: '100%' }}
         >
-          <WebGLShader />
-        </motion.div>
+          <Dither
+            waveColor={[0.7, 0.1, 1]}
+            disableAnimation={false}
+            enableMouseInteraction={true}
+            mouseRadius={0.6}
+            colorNum={4}
+            waveAmplitude={0.3}
+            waveFrequency={3}
+            waveSpeed={0.05}
+          />
+        </div>
 
         {/* Top-to-Bottom Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/50 to-[#020202]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/50 to-[#020202] pointer-events-none" />
         
         {/* Smooth Darkening Overlay on Scroll */}
         <motion.div 
           style={{ opacity: darkeningOpacity }}
-          className="absolute inset-0 bg-[#020202]"
+          className="absolute inset-0 bg-[#020202] pointer-events-none"
         />
-
-        {/* Persistent subtle glows */}
-        <div className="absolute top-[-10%] left-[-5%] w-[50%] h-[50%] bg-electric-red/5 blur-[120px] rounded-full opacity-50" />
-        <div className="absolute top-[-5%] right-[-5%] w-[40%] h-[40%] bg-emerald-green/5 blur-[100px] rounded-full opacity-30" />
       </div>
 
       <Navbar />
