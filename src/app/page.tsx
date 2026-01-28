@@ -7,7 +7,6 @@ import { Portfolio } from "@/components/Portfolio";
 import { Services } from "@/components/Services";
 import { Footer } from "@/components/Footer";
 import { LogoShowcase } from "@/components/LogoShowcase";
-import { TopographyBackground } from "@/components/TopographyBackground";
 import { DotScreenShader } from "@/components/ui/dot-shader-background";
 import { useEffect, useState } from "react";
 import Lenis from "lenis";
@@ -49,8 +48,6 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen bg-transparent selection:bg-electric-red selection:text-white overflow-hidden">
-      <TopographyBackground />
-
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-electric-red z-[100] origin-left"
         style={{ scaleX }}
@@ -62,12 +59,12 @@ export default function Home() {
         <Hero />
 
         <div className="relative">
-          <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+          <div className="fixed inset-0 z-0 opacity-30 pointer-events-auto">
             <DotScreenShader />
           </div>
           
           <div className="relative z-10">
-            <section id="who-we-are" className="py-24 px-6 relative z-10 bg-transparent">
+            <section id="who-we-are" className="py-24 px-6 relative z-10 bg-transparent pointer-events-none">
               <div className="max-w-5xl mx-auto text-center space-y-6">
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -97,8 +94,10 @@ export default function Home() {
               </div>
             </section>
 
-            <Services />
-            <Portfolio />
+            <div className="pointer-events-none">
+              <Services />
+              <Portfolio />
+            </div>
 
             <section id="about" className="py-32 px-6 relative z-10 bg-transparent">
               <div className="max-w-5xl mx-auto">
@@ -123,7 +122,7 @@ export default function Home() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-12 py-5 rounded-full bg-white text-black font-black text-lg hover:shadow-[0_0_40px_rgba(6,182,212,0.35)] transition-all"
+                    className="px-12 py-5 rounded-full bg-white text-black font-black text-lg hover:shadow-[0_0_40px_rgba(6,182,212,0.35)] transition-all pointer-events-auto"
                   >
                     Agendar uma Conversa
                   </motion.button>
@@ -131,8 +130,10 @@ export default function Home() {
               </div>
             </section>
 
-            <LogoShowcase />
-            <Footer />
+            <div className="pointer-events-none">
+              <LogoShowcase />
+              <Footer />
+            </div>
           </div>
         </div>
       </div>

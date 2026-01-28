@@ -79,7 +79,7 @@ const DotMaterial = shaderMaterial(
       float scaleInfluence = max(mouseInfluence * 0.5, circleAnimatedMask * 0.3);
 
       // Create dots with animated scale, influenced by mouse
-      float dotSize = min(pow(circleMaskCenter, 2.0) * 0.3, 0.3);
+      float dotSize = min(pow(circleMaskCenter, 2.0) * 0.08, 0.08);
 
       float sdfDot = sdfCircle(gridUv, dotSize * (1.0 + scaleInfluence * 0.5));
 
@@ -104,15 +104,15 @@ function Scene() {
   const { theme } = useTheme()
   
   const rotation = 0
-  const gridSize = 100
+    const gridSize = 250
 
   const getThemeColors = () => {
     switch (theme) {
       case 'dark':
         return {
           dotColor: '#FFFFFF',
-          bgColor: '#121212',
-          dotOpacity: 0.025
+          bgColor: '#050505',
+          dotOpacity: 0.1
         }
       case 'light':
         return {
@@ -123,8 +123,8 @@ function Scene() {
       default:
         return {
           dotColor: '#FFFFFF',
-          bgColor: '#121212',
-          dotOpacity: 0.05
+          bgColor: '#050505',
+          dotOpacity: 0.1
         }
     }
   }
