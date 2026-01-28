@@ -1,47 +1,32 @@
 'use client';
 
-import { Suspense, useRef, useState, useEffect } from 'react';
+import { Suspense, useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Float, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
-function Model({ isHovered, scrollProgress }: { isHovered: boolean; scrollProgress: number }) {
+function Model() {
   const { scene } = useGLTF('/logomezzold3d.glb');
   const modelRef = useRef<THREE.Group>(null);
   const timeRef = useRef(0);
   
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!modelRef.current) return;
-    
     timeRef.current += delta;
-    
-    modelRef.current.rotation.y += delta * 0.2;
-    
-    const breathe = Math.sin(timeRef.current * 1.5) * 0.03;
-    const baseScale = 2.5;
-    modelRef.current.scale.setScalar(baseScale + breathe);
-    
-    const scrollRotation = scrollProgress * Math.PI * 2;
-    modelRef.current.rotation.x = THREE.MathUtils.lerp(
-      modelRef.current.rotation.x,
-      scrollRotation * 0.3 + (isHovered ? Math.sin(state.clock.elapsedTime * 2) * 0.2 : 0),
-      0.08
-    );
-    modelRef.current.rotation.z = THREE.MathUtils.lerp(
-      modelRef.current.rotation.z,
-      scrollRotation * 0.2 + (isHovered ? Math.cos(state.clock.elapsedTime * 2) * 0.15 : 0),
-      0.08
-    );
+    const breathe = Math.sin(timeRef.current * 1.2) * 0.015;
+    modelRef.current.scale.setScalar(4 + breathe);
   });
 
   useEffect(() => {
     scene.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         child.material = new THREE.MeshStandardMaterial({
-          color: new THREE.Color('#ffffff'),
-          metalness: 0.95,
-          roughness: 0.05,
-          envMapIntensity: 2,
+          color: new THREE.Color('#10b981'),
+          metalness: 0.7,
+          roughness: 0.25,
+          envMapIntensity: 1.8,
+          emissive: new THREE.Color('#064e3b'),
+          emissiveIntensity: 0.15,
         });
       }
     });
@@ -49,11 +34,12 @@ function Model({ isHovered, scrollProgress }: { isHovered: boolean; scrollProgre
 
   return (
     <Float
-      speed={isHovered ? 5 : 2.5}
-      rotationIntensity={isHovered ? 1 : 0.4}
-      floatIntensity={isHovered ? 1.5 : 0.6}
+      speed={1.5}
+      rotationIntensity={0}
+      floatIntensity={0.4}
+      floatingRange={[-0.1, 0.1]}
     >
-      <group ref={modelRef} scale={2.5}>
+      <group ref={modelRef} scale={4} rotation={[0, 0, 0]}>
         <primitive object={scene} />
       </group>
     </Float>
@@ -63,71 +49,33 @@ function Model({ isHovered, scrollProgress }: { isHovered: boolean; scrollProgre
 function Lights() {
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={2} color="#ffffff" />
-      <directionalLight position={[-10, -10, -5]} intensity={0.8} color="#06b6d4" />
-      <pointLight position={[0, 5, 0]} intensity={1.5} color="#10b981" />
-      <pointLight position={[-5, -5, 5]} intensity={0.8} color="#06b6d4" />
-      <spotLight position={[5, 10, 7]} angle={0.3} penumbra={1} intensity={2.5} color="#ffffff" castShadow />
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[5, 5, 5]} intensity={1.5} color="#ffffff" />
+      <directionalLight position={[-5, 3, -5]} intensity={0.6} color="#10b981" />
+      <pointLight position={[0, 3, 3]} intensity={1} color="#06b6d4" />
+      <pointLight position={[0, -3, 2]} intensity={0.5} color="#10b981" />
     </>
   );
 }
 
 export function MezzoldLogo3D() {
-  const [isHovered, setIsHovered] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      const elementCenter = rect.top + rect.height / 2;
-      const progress = Math.max(0, Math.min(1, 1 - (elementCenter / windowHeight)));
-      setScrollProgress(progress);
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const isOver = e.clientX >= rect.left && e.clientX <= rect.right &&
-                     e.clientY >= rect.top && e.clientY <= rect.bottom;
-      setIsHovered(isOver);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('mousemove', handleMouseMove);
-    handleScroll();
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
   return (
-    <div 
-      ref={containerRef}
-      className="w-full h-[350px] md:h-[400px] lg:h-[450px] relative mx-auto max-w-4xl"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="w-full h-[450px] md:h-[550px] lg:h-[600px] relative mx-auto max-w-5xl">
       <Canvas
-        camera={{ position: [0, 0, 6], fov: 50 }}
+        camera={{ position: [0, 0, 5], fov: 50 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={null}>
           <Lights />
-          <Model isHovered={isHovered} scrollProgress={scrollProgress} />
+          <Model />
           <Environment preset="city" />
         </Suspense>
       </Canvas>
       
       <div 
-        className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${isHovered ? 'opacity-100' : 'opacity-30'}`}
-        style={{ background: 'radial-gradient(circle at center, rgba(6,182,212,0.2) 0%, transparent 60%)' }}
+        className="absolute inset-0 pointer-events-none opacity-40"
+        style={{ background: 'radial-gradient(circle at center, rgba(16,185,129,0.25) 0%, transparent 55%)' }}
       />
     </div>
   );
