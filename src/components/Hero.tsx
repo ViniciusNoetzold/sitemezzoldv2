@@ -1,12 +1,9 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import dynamic from 'next/dynamic';
-import { AnimatedHeroText } from './ui/animated-hero';
-import { MezzoldLogo3D } from './MezzoldLogo3D';
-import { WebGLShader } from './ui/web-gl-shader';
 import { LiquidButton } from './ui/liquid-glass-button';
 import { GlowingEffect } from './ui/glowing-effect';
+import { Typewriter } from './ui/typewriter';
 
 export function Hero() {
   const { scrollY } = useScroll();
@@ -24,14 +21,14 @@ export function Hero() {
             Mezzold Studio · Software House Premium
           </motion.p>
         
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: 'easeOut', delay: 0.1 }}
-            className="relative flex items-center justify-center"
+            className="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter font-[var(--font-bebas)]"
           >
-            <MezzoldLogo3D />
-          </motion.div>
+            MEZZOLD
+          </motion.h1>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -39,10 +36,18 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.2 }}
           className="mt-6"
         >
-          <AnimatedHeroText 
-            prefix="Criamos"
-            titles={["inovação", "performance", "design", "precisão", "resultados"]}
-          />
+          <p className="text-2xl md:text-4xl font-medium text-white/90">
+            <span>Criamos </span>
+            <Typewriter
+              text={["inovação", "performance", "design", "precisão", "resultados"]}
+              speed={70}
+              className="text-emerald-green font-bold"
+              waitTime={1500}
+              deleteSpeed={40}
+              cursorChar={"_"}
+              cursorClassName="text-emerald-green ml-1"
+            />
+          </p>
         </motion.div>
 
         <motion.p
