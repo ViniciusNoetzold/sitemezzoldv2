@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Portfolio } from "@/components/Portfolio";
@@ -8,11 +8,13 @@ import { Services } from "@/components/Services";
 import { Footer } from "@/components/Footer";
 import { LogoShowcase } from "@/components/LogoShowcase";
 import { WebGLShader } from "@/components/ui/web-gl-shader";
+import { GooeyText } from "@/components/ui/gooey-text-morphing";
 import { useEffect, useState } from "react";
 import Lenis from "lenis";
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
   const { scrollYProgress } = useScroll();
   
   const scaleX = useSpring(scrollYProgress, {
@@ -26,6 +28,10 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
+
+    const introTimer = setTimeout(() => {
+      setShowIntro(false);
+    }, 4000);
 
     const lenis = new Lenis({
       duration: 1.5,
@@ -45,17 +51,38 @@ export default function Home() {
 
     return () => {
       lenis.destroy();
+      clearTimeout(introTimer);
     };
   }, []);
 
   if (!mounted) return null;
 
   return (
-    <main className="relative min-h-screen bg-[#020202] selection:bg-electric-red selection:text-white overflow-hidden">
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-electric-red z-[100] origin-left"
-        style={{ scaleX }}
-      />
+    <>
+      <AnimatePresence>
+        {showIntro && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="fixed inset-0 z-[200] bg-[#020202] flex items-center justify-center"
+          >
+            <GooeyText
+              texts={["MEZZOLD", "DESIGN", "CODE", "MOTION", "MEZZOLD"]}
+              morphTime={0.8}
+              cooldownTime={0.4}
+              className="h-[200px]"
+              textClassName="font-black text-white"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <main className="relative min-h-screen bg-[#020202] selection:bg-electric-red selection:text-white overflow-hidden">
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-electric-red z-[100] origin-left"
+          style={{ scaleX }}
+        />
 
       {/* Unified Background System */}
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -162,5 +189,6 @@ export default function Home() {
         </div>
       </div>
     </main>
+    </>
   );
 }
