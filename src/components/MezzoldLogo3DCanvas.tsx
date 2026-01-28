@@ -1,7 +1,7 @@
 'use client';
 
-import { Suspense, useRef, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Suspense, useRef, useEffect, useState } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Float, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -10,24 +10,71 @@ function Model() {
   const modelRef = useRef<THREE.Group>(null);
   const materialRef = useRef<THREE.MeshPhysicalMaterial | null>(null);
   const timeRef = useRef(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const targetRotation = useRef(new THREE.Euler(0, 0, 0));
+  const targetScale = useRef(3);
   
-    useFrame((_, delta) => {
-      if (!modelRef.current) return;
-      timeRef.current += delta;
-      
-      const breathe = Math.sin(timeRef.current * 0.4) * 0.025;
-      modelRef.current.scale.setScalar(3 + breathe);
-      
-      const tiltX = Math.sin(timeRef.current * 0.3) * 0.025;
-      const tiltZ = Math.cos(timeRef.current * 0.2) * 0.015;
-      modelRef.current.rotation.x = tiltX;
-      modelRef.current.rotation.z = tiltZ;
+  const { viewport } = useThree();
   
-      if (materialRef.current) {
-        const pulse = (Math.sin(timeRef.current * 1.2) + 1) * 0.5;
-        materialRef.current.emissiveIntensity = 0.3 + pulse * 0.4;
-      }
-    });
+  useFrame((state, delta) => {
+    if (!modelRef.current) return;
+    timeRef.current += delta;
+    
+    // Animação constante (Idle)
+    const breathe = Math.sin(timeRef.current * 0.4) * 0.05;
+    const idleTiltX = Math.sin(timeRef.current * 0.3) * 0.1;
+    const idleTiltY = Math.cos(timeRef.current * 0.4) * 0.1;
+    const idleTiltZ = Math.cos(timeRef.current * 0.2) * 0.05;
+
+    if (isDragging) {
+      // Interatividade: Seguir o mouse
+      targetRotation.current.x = -mouseRef.current.y * 1.5;
+      targetRotation.current.y = mouseRef.current.x * 1.5;
+      targetScale.current = 3.5; // Aumenta ao segurar
+    } else {
+      // Retornar ao original com o idle
+      targetRotation.current.x = idleTiltX;
+      targetRotation.current.y = idleTiltY;
+      targetRotation.current.z = idleTiltZ;
+      targetScale.current = 3 + breathe;
+    }
+
+    // Suavização (Lerp)
+    modelRef.current.rotation.x = THREE.MathUtils.lerp(modelRef.current.rotation.x, targetRotation.current.x, delta * 5);
+    modelRef.current.rotation.y = THREE.MathUtils.lerp(modelRef.current.rotation.y, targetRotation.current.y, delta * 5);
+    modelRef.current.rotation.z = THREE.MathUtils.lerp(modelRef.current.rotation.z, targetRotation.current.z, delta * 5);
+    
+    const currentScale = modelRef.current.scale.x;
+    const newScale = THREE.MathUtils.lerp(currentScale, targetScale.current, delta * 5);
+    modelRef.current.scale.setScalar(newScale);
+
+    if (materialRef.current) {
+      const pulse = (Math.sin(timeRef.current * 1.2) + 1) * 0.5;
+      materialRef.current.emissiveIntensity = 0.3 + pulse * 0.4 + (isDragging ? 0.5 : 0);
+    }
+  });
+
+  const handlePointerDown = (e: any) => {
+    e.stopPropagation();
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    setIsDragging(true);
+  };
+
+  const handlePointerUp = (e: any) => {
+    e.stopPropagation();
+    (e.target as HTMLElement).releasePointerCapture(e.pointerId);
+    setIsDragging(false);
+  };
+
+  const handlePointerMove = (e: any) => {
+    if (isDragging) {
+      // Normalizar coordenadas do mouse (-1 a 1)
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = -(e.clientY / window.innerHeight) * 2 + 1;
+      mouseRef.current = { x, y };
+    }
+  };
 
   useEffect(() => {
     scene.traverse((child) => {
@@ -51,12 +98,20 @@ function Model() {
 
   return (
     <Float
-      speed={1}
-      rotationIntensity={0}
-      floatIntensity={0.5}
-      floatingRange={[-0.12, 0.12]}
+      speed={1.5}
+      rotationIntensity={0.2}
+      floatIntensity={0.8}
+      floatingRange={[-0.15, 0.15]}
     >
-      <group ref={modelRef} scale={3} rotation={[0, 0, 0]}>
+      <group 
+        ref={modelRef} 
+        scale={3} 
+        rotation={[0, 0, 0]}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onPointerMove={handlePointerMove}
+        style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+      >
         <primitive object={scene} />
       </group>
     </Float>
