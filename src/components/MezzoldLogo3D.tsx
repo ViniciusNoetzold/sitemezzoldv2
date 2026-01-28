@@ -1,142 +1,94 @@
 'use client';
 
-import { Suspense, useRef, useEffect, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, Float, Environment } from '@react-three/drei';
-import * as THREE from 'three';
+import { Suspense, useRef, useEffect, useState, Component, ReactNode } from 'react';
+import dynamic from 'next/dynamic';
 
-function Model() {
-  const { scene } = useGLTF('/logomezzold3d.glb');
-  const modelRef = useRef<THREE.Group>(null);
-  const materialRef = useRef<THREE.MeshPhysicalMaterial | null>(null);
-  const timeRef = useRef(0);
-  
-  useFrame((_, delta) => {
-    if (!modelRef.current) return;
-    timeRef.current += delta;
-    
-    const breathe = Math.sin(timeRef.current * 0.8) * 0.025;
-    modelRef.current.scale.setScalar(3 + breathe);
-    
-    const tiltX = Math.sin(timeRef.current * 0.5) * 0.025;
-    const tiltZ = Math.cos(timeRef.current * 0.4) * 0.015;
-    modelRef.current.rotation.x = tiltX;
-    modelRef.current.rotation.z = tiltZ;
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
 
-    if (materialRef.current) {
-      const pulse = (Math.sin(timeRef.current * 2) + 1) * 0.5;
-      materialRef.current.emissiveIntensity = 0.3 + pulse * 0.4;
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback: ReactNode;
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
     }
-  });
-
-  useEffect(() => {
-    scene.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        const material = new THREE.MeshPhysicalMaterial({
-          color: new THREE.Color('#0d9488'),
-          metalness: 0.9,
-          roughness: 0.08,
-          envMapIntensity: 3,
-          emissive: new THREE.Color('#14b8a6'),
-          emissiveIntensity: 0.4,
-          clearcoat: 1,
-          clearcoatRoughness: 0.1,
-          reflectivity: 1,
-        });
-        child.material = material;
-        materialRef.current = material;
-      }
-    });
-  }, [scene]);
-
-  return (
-    <Float
-      speed={2}
-      rotationIntensity={0}
-      floatIntensity={0.5}
-      floatingRange={[-0.12, 0.12]}
-    >
-      <group ref={modelRef} scale={3} rotation={[0, 0, 0]}>
-        <primitive object={scene} />
-      </group>
-    </Float>
-  );
+    return this.props.children;
+  }
 }
 
-function Lights() {
-  return (
-    <>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={2.5} color="#ffffff" />
-      <directionalLight position={[-5, 3, -5]} intensity={1} color="#14b8a6" />
-      <pointLight position={[0, 4, 4]} intensity={2} color="#06b6d4" />
-      <pointLight position={[-3, -2, 3]} intensity={0.8} color="#10b981" />
-      <pointLight position={[3, -2, 3]} intensity={0.8} color="#14b8a6" />
-      <spotLight 
-        position={[0, 5, 0]} 
-        angle={0.5} 
-        penumbra={1} 
-        intensity={1.5} 
-        color="#22d3ee" 
-      />
-    </>
-  );
-}
-
-function Scene() {
-  return (
-    <>
-      <Lights />
-      <Model />
-      <Environment preset="studio" />
-    </>
-  );
-}
-
-function ErrorFallback() {
+function LogoFallback() {
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <div className="text-emerald-green/60 text-center">
-        <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-teal-500/20 to-cyan-500/20 flex items-center justify-center">
-          <span className="text-4xl font-black text-teal-400">M</span>
+      <div className="relative">
+        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-teal-500/30 to-cyan-500/30 flex items-center justify-center animate-pulse">
+          <span className="text-5xl font-black bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">M</span>
         </div>
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-teal-500/20 to-cyan-500/20 blur-xl animate-pulse" />
       </div>
     </div>
   );
 }
 
+const ThreeCanvas = dynamic(
+  () => import('./MezzoldLogo3DCanvas').then(mod => ({ default: mod.MezzoldLogo3DCanvas })),
+  {
+    ssr: false,
+    loading: () => <LogoFallback />,
+  }
+);
+
 export function MezzoldLogo3D() {
-  const [hasError, setHasError] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [webGLSupported, setWebGLSupported] = useState(true);
 
   useEffect(() => {
-    const handleError = () => setHasError(true);
-    window.addEventListener('error', handleError);
-    return () => window.removeEventListener('error', handleError);
+    setMounted(true);
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) {
+        setWebGLSupported(false);
+      }
+    } catch {
+      setWebGLSupported(false);
+    }
   }, []);
 
-  if (hasError) {
+  if (!mounted) {
     return (
       <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl">
-        <ErrorFallback />
+        <LogoFallback />
+      </div>
+    );
+  }
+
+  if (!webGLSupported) {
+    return (
+      <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl">
+        <LogoFallback />
       </div>
     );
   }
 
   return (
     <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl">
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 45 }}
-        gl={{ antialias: true, alpha: true }}
-        style={{ background: 'transparent' }}
-        onCreated={({ gl }) => {
-          gl.setClearColor(0x000000, 0);
-        }}
-      >
-        <Suspense fallback={null}>
-          <Scene />
-        </Suspense>
-      </Canvas>
-      
+      <ErrorBoundary fallback={<LogoFallback />}>
+        <ThreeCanvas />
+      </ErrorBoundary>
       <div 
         className="absolute inset-0 pointer-events-none opacity-60"
         style={{ background: 'radial-gradient(circle at center, rgba(20,184,166,0.15) 0%, transparent 50%)' }}
@@ -144,5 +96,3 @@ export function MezzoldLogo3D() {
     </div>
   );
 }
-
-useGLTF.preload('/logomezzold3d.glb');
