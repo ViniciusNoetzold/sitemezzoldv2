@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useEffect } from 'react';
-import { WireframeSphere } from './WireframeSphere';
+import { MezzoldLogo3D } from './MezzoldLogo3D';
 
 export function Hero() {
   const { scrollY } = useScroll();
@@ -34,13 +34,13 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-6 overflow-hidden bg-transparent perspective-[1200px]">
       <motion.div
-        style={{ y: sphereY, rotate: sphereRotate, opacity: sphereOpacity, rotateX, rotateY }}
-        className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center transform-gpu"
-      >
-        <div className="absolute w-[900px] h-[900px] rounded-full bg-cyan-bright/10 blur-[120px]" />
-        <div className="absolute w-[700px] h-[700px] rounded-full bg-emerald-green/10 blur-[140px]" />
-        <WireframeSphere />
-      </motion.div>
+          style={{ y: sphereY, rotate: sphereRotate, opacity: sphereOpacity, rotateX, rotateY }}
+          className="absolute inset-0 z-0 pointer-events-auto flex items-center justify-center transform-gpu"
+        >
+          <div className="absolute w-[900px] h-[900px] rounded-full bg-cyan-bright/10 blur-[120px]" />
+          <div className="absolute w-[700px] h-[700px] rounded-full bg-emerald-green/10 blur-[140px]" />
+          <MezzoldLogo3D />
+        </motion.div>
 
         <div
           className="absolute inset-0 z-[5] pointer-events-none"
