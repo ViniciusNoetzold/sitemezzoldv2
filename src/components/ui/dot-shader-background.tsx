@@ -15,7 +15,7 @@ const DotMaterial = shaderMaterial(
     mouseTrail: null,
     render: 0,
     rotation: 0,
-    gridSize: 50,
+    gridSize: 450,
     dotOpacity: 0.05
   },
   /* glsl */ `
@@ -64,31 +64,31 @@ const DotMaterial = shaderMaterial(
       // Calculate distance from the center of each cell
       float baseDot = sdfCircle(gridUv, 0.25);
 
-      // Screen mask
-      float screenMask = smoothstep(0.0, 1.0, 1.0 - uv.y); // 0 at the top, 1 at the bottom
-      vec2 centerDisplace = vec2(0.7, 1.1);
-      float circleMaskCenter = length(uv - centerDisplace);
-      float circleMaskFromCenter = smoothstep(0.5, 1.0, circleMaskCenter);
+      // Screen mask - subtly fade top and bottom
+      float screenMask = smoothstep(0.0, 0.2, uv.y) * smoothstep(1.0, 0.8, uv.y);
       
-      float combinedMask = screenMask * circleMaskFromCenter;
-      float circleAnimatedMask = sin(time * 2.0 + circleMaskCenter * 10.0);
+      // Focus point for animation
+      vec2 centerDisplace = vec2(0.5, 0.5);
+      float circleMaskCenter = length(uv - centerDisplace);
+      
+      float circleAnimatedMask = sin(time * 1.5 + circleMaskCenter * 8.0);
 
       // Mouse trail effect
       float mouseInfluence = texture2D(mouseTrail, gridUvCenterInScreenCoords).r;
       
-      float scaleInfluence = max(mouseInfluence * 0.5, circleAnimatedMask * 0.3);
+      float scaleInfluence = max(mouseInfluence * 0.8, circleAnimatedMask * 0.2);
 
-      // Create dots with animated scale, influenced by mouse
-      float dotSize = min(pow(circleMaskCenter, 2.0) * 0.08, 0.08);
+      // Ultra small dots
+      float dotSize = 0.04 * (1.0 + scaleInfluence);
 
-      float sdfDot = sdfCircle(gridUv, dotSize * (1.0 + scaleInfluence * 0.5));
+      float sdfDot = sdfCircle(gridUv, dotSize);
 
-      float smoothDot = smoothstep(0.05, 0.0, sdfDot);
+      float smoothDot = smoothstep(0.02, 0.0, sdfDot);
 
-      float opacityInfluence = max(mouseInfluence * 50.0, circleAnimatedMask * 0.5);
+      float opacityInfluence = max(mouseInfluence * 30.0, circleAnimatedMask * 0.3);
 
-      // Mix background color with dot color, using animated opacity to increase visibility
-      vec3 composition = mix(bgColor, dotColor, smoothDot * combinedMask * dotOpacity * (1.0 + opacityInfluence));
+      // Mix background color with dot color
+      vec3 composition = mix(bgColor, dotColor, smoothDot * dotOpacity * (1.0 + opacityInfluence));
 
       gl_FragColor = vec4(composition, 1.0);
 
@@ -104,27 +104,27 @@ function Scene() {
   const { theme } = useTheme()
   
   const rotation = 0
-    const gridSize = 250
+  const gridSize = 450
 
   const getThemeColors = () => {
     switch (theme) {
       case 'dark':
         return {
           dotColor: '#FFFFFF',
-          bgColor: '#050505',
-          dotOpacity: 0.1
+          bgColor: '#000000',
+          dotOpacity: 0.12
         }
       case 'light':
         return {
-          dotColor: '#e1e1e1',
-          bgColor: '#F4F5F5',
-          dotOpacity: 0.15
+          dotColor: '#000000',
+          bgColor: '#FFFFFF',
+          dotOpacity: 0.08
         }
       default:
         return {
           dotColor: '#FFFFFF',
-          bgColor: '#050505',
-          dotOpacity: 0.1
+          bgColor: '#000000',
+          dotOpacity: 0.12
         }
     }
   }
@@ -133,12 +133,10 @@ function Scene() {
 
   const [trail, onMove] = useTrailTexture({
     size: 512,
-    radius: 0.1,
-    maxAge: 400,
-    interpolate: 1,
-    ease: function easeInOutCirc(x) {
-      return x < 0.5 ? (1 - Math.sqrt(1 - Math.pow(2 * x, 2))) / 2 : (Math.sqrt(1 - Math.pow(-2 * x + 2, 2)) + 1) / 2
-    }
+    radius: 0.08,
+    maxAge: 600,
+    interpolate: 3,
+    ease: (x) => x
   })
 
   const dotMaterial = useMemo(() => {
@@ -178,14 +176,16 @@ function Scene() {
 
 export const DotScreenShader = () => {
   return (
-    <Canvas
-      gl={{
-        antialias: true,
-        powerPreference: 'high-performance',
-        outputColorSpace: THREE.SRGBColorSpace,
-        toneMapping: THREE.NoToneMapping
-      }}>
-      <Scene />
-    </Canvas>
+    <div className="w-full h-full">
+      <Canvas
+        gl={{
+          antialias: true,
+          powerPreference: 'high-performance',
+          outputColorSpace: THREE.SRGBColorSpace,
+          toneMapping: THREE.NoToneMapping
+        }}>
+        <Scene />
+      </Canvas>
+    </div>
   )
 }
