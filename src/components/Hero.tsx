@@ -1,7 +1,18 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { MezzoldLogo3D } from './MezzoldLogo3D';
+import dynamic from 'next/dynamic';
+
+const MezzoldLogo3D = dynamic(() => import('./MezzoldLogo3D').then(mod => ({ default: mod.MezzoldLogo3D })), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] flex items-center justify-center">
+      <div className="w-24 h-24 rounded-full bg-gradient-to-br from-teal-500/20 to-cyan-500/20 animate-pulse flex items-center justify-center">
+        <span className="text-4xl font-black text-teal-400">M</span>
+      </div>
+    </div>
+  ),
+});
 
 export function Hero() {
   const { scrollY } = useScroll();

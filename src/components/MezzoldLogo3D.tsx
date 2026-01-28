@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useRef, useEffect } from 'react';
+import { Suspense, useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Float, Environment } from '@react-three/drei';
 import * as THREE from 'three';
@@ -42,8 +42,6 @@ function Model() {
           clearcoat: 1,
           clearcoatRoughness: 0.1,
           reflectivity: 1,
-          iridescence: 0.3,
-          iridescenceIOR: 1.5,
         });
         child.material = material;
         materialRef.current = material;
@@ -85,18 +83,57 @@ function Lights() {
   );
 }
 
+function Scene() {
+  return (
+    <>
+      <Lights />
+      <Model />
+      <Environment preset="studio" />
+    </>
+  );
+}
+
+function ErrorFallback() {
+  return (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="text-emerald-green/60 text-center">
+        <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-teal-500/20 to-cyan-500/20 flex items-center justify-center">
+          <span className="text-4xl font-black text-teal-400">M</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function MezzoldLogo3D() {
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    const handleError = () => setHasError(true);
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
+  }, []);
+
+  if (hasError) {
+    return (
+      <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl">
+        <ErrorFallback />
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0);
+        }}
       >
         <Suspense fallback={null}>
-          <Lights />
-          <Model />
-          <Environment preset="studio" />
+          <Scene />
         </Suspense>
       </Canvas>
       
