@@ -13,20 +13,26 @@ function Model() {
   useFrame((_, delta) => {
     if (!modelRef.current) return;
     timeRef.current += delta;
-    const breathe = Math.sin(timeRef.current * 1.2) * 0.015;
-    modelRef.current.scale.setScalar(4 + breathe);
+    
+    const breathe = Math.sin(timeRef.current * 0.8) * 0.04;
+    modelRef.current.scale.setScalar(4.5 + breathe);
+    
+    const tiltX = Math.sin(timeRef.current * 0.5) * 0.03;
+    const tiltZ = Math.cos(timeRef.current * 0.4) * 0.02;
+    modelRef.current.rotation.x = tiltX;
+    modelRef.current.rotation.z = tiltZ;
   });
 
   useEffect(() => {
     scene.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         child.material = new THREE.MeshStandardMaterial({
-          color: new THREE.Color('#10b981'),
-          metalness: 0.7,
-          roughness: 0.25,
-          envMapIntensity: 1.8,
-          emissive: new THREE.Color('#064e3b'),
-          emissiveIntensity: 0.15,
+          color: new THREE.Color('#ef4444'),
+          metalness: 0.85,
+          roughness: 0.15,
+          envMapIntensity: 2.2,
+          emissive: new THREE.Color('#7f1d1d'),
+          emissiveIntensity: 0.25,
         });
       }
     });
@@ -34,12 +40,12 @@ function Model() {
 
   return (
     <Float
-      speed={1.5}
+      speed={2}
       rotationIntensity={0}
-      floatIntensity={0.4}
-      floatingRange={[-0.1, 0.1]}
+      floatIntensity={0.6}
+      floatingRange={[-0.15, 0.15]}
     >
-      <group ref={modelRef} scale={4} rotation={[0, 0, 0]}>
+      <group ref={modelRef} scale={4.5} rotation={[0, 0, 0]}>
         <primitive object={scene} />
       </group>
     </Float>
@@ -49,11 +55,12 @@ function Model() {
 function Lights() {
   return (
     <>
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 5, 5]} intensity={1.5} color="#ffffff" />
-      <directionalLight position={[-5, 3, -5]} intensity={0.6} color="#10b981" />
-      <pointLight position={[0, 3, 3]} intensity={1} color="#06b6d4" />
-      <pointLight position={[0, -3, 2]} intensity={0.5} color="#10b981" />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 5, 5]} intensity={2} color="#ffffff" />
+      <directionalLight position={[-5, 3, -5]} intensity={0.8} color="#ef4444" />
+      <pointLight position={[0, 4, 4]} intensity={1.5} color="#ef4444" />
+      <pointLight position={[-3, -2, 3]} intensity={0.6} color="#10b981" />
+      <pointLight position={[3, -2, 3]} intensity={0.6} color="#06b6d4" />
     </>
   );
 }
@@ -74,8 +81,8 @@ export function MezzoldLogo3D() {
       </Canvas>
       
       <div 
-        className="absolute inset-0 pointer-events-none opacity-40"
-        style={{ background: 'radial-gradient(circle at center, rgba(16,185,129,0.25) 0%, transparent 55%)' }}
+        className="absolute inset-0 pointer-events-none opacity-50"
+        style={{ background: 'radial-gradient(circle at center, rgba(239,68,68,0.2) 0%, transparent 55%)' }}
       />
     </div>
   );
