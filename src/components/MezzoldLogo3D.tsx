@@ -1,15 +1,15 @@
 'use client';
 
-import { Suspense, useRef, useEffect, useState, Component, ReactNode } from 'react';
+import { Suspense, useState, useEffect, ReactNode, Component } from 'react';
 import dynamic from 'next/dynamic';
-
-interface ErrorBoundaryState {
-  hasError: boolean;
-}
 
 interface ErrorBoundaryProps {
   children: ReactNode;
   fallback: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
@@ -32,7 +32,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
 function LogoFallback() {
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center bg-transparent">
       <div className="relative">
         <div className="w-32 h-32 rounded-full bg-gradient-to-br from-teal-500/30 to-cyan-500/30 flex items-center justify-center animate-pulse">
           <span className="text-5xl font-black bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">M</span>
@@ -53,45 +53,33 @@ const ThreeCanvas = dynamic(
 
 export function MezzoldLogo3D() {
   const [mounted, setMounted] = useState(false);
-  const [webGLSupported, setWebGLSupported] = useState(true);
 
   useEffect(() => {
     setMounted(true);
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) {
-        setWebGLSupported(false);
-      }
-    } catch {
-      setWebGLSupported(false);
-    }
   }, []);
 
   if (!mounted) {
     return (
-      <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl">
-        <LogoFallback />
-      </div>
-    );
-  }
-
-  if (!webGLSupported) {
-    return (
-      <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl">
+      <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl bg-transparent">
         <LogoFallback />
       </div>
     );
   }
 
   return (
-    <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl">
+    <div className="w-full h-[350px] md:h-[420px] lg:h-[480px] relative mx-auto max-w-4xl bg-transparent overflow-hidden">
       <ErrorBoundary fallback={<LogoFallback />}>
-        <ThreeCanvas />
+        <Suspense fallback={<LogoFallback />}>
+          <ThreeCanvas />
+        </Suspense>
       </ErrorBoundary>
+      
+      {/* Decorative gradient glow */}
       <div 
-        className="absolute inset-0 pointer-events-none opacity-60"
-        style={{ background: 'radial-gradient(circle at center, rgba(20,184,166,0.15) 0%, transparent 50%)' }}
+        className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen"
+        style={{ 
+          background: 'radial-gradient(circle at center, rgba(20,184,166,0.15) 0%, transparent 60%)' 
+        }}
       />
     </div>
   );

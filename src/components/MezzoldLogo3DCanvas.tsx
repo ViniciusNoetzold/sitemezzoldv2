@@ -87,13 +87,15 @@ export function MezzoldLogo3DCanvas() {
   return (
     <Canvas
       camera={{ position: [0, 0, 5], fov: 45 }}
+      dpr={[1, 2]}
       gl={{ 
         antialias: true, 
         alpha: true,
-        powerPreference: 'default',
+        powerPreference: 'high-performance',
         failIfMajorPerformanceCaveat: false,
+        preserveDrawingBuffer: true
       }}
-      style={{ background: 'transparent' }}
+      style={{ background: 'transparent', width: '100%', height: '100%' }}
       onCreated={({ gl }) => {
         gl.setClearColor(0x000000, 0);
       }}
