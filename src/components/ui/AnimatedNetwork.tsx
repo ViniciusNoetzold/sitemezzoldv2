@@ -41,16 +41,17 @@ export function AnimatedNetwork() {
               stroke="rgba(59, 130, 246, 0.2)"
               strokeWidth="1"
             />
-            <motion.circle
-              r="2"
-              fill="#3b82f6"
-              filter="url(#glow)"
-              initial={{ offsetDistance: "0%" }}
-              animate={{ 
-                cx: [nodes[start].x, nodes[end].x],
-                cy: [nodes[start].y, nodes[end].y],
-                opacity: [0, 1, 0]
-              }}
+              <motion.circle
+                r="2"
+                fill="#3b82f6"
+                filter="url(#glow)"
+                cx={nodes[start].x}
+                cy={nodes[start].y}
+                animate={{ 
+                  cx: [nodes[start].x, nodes[end].x],
+                  cy: [nodes[start].y, nodes[end].y],
+                  opacity: [0, 1, 0]
+                }}
               transition={{
                 duration: 2 + Math.random() * 2,
                 repeat: Infinity,

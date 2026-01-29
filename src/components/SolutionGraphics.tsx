@@ -89,17 +89,18 @@ export function NetworkConstellation() {
           />
         ))}
         
-        {/* Pulse travel effect */}
-        {nodes.map((node, i) => (
-          <motion.circle
-            key={`pulse-${i}`}
-            r="1"
-            fill="#3b82f6"
-            animate={{
-              cx: [50, node.x],
-              cy: [50, node.y],
-              opacity: [0, 1, 0],
-            }}
+          {/* Pulse travel effect */}
+          {nodes.map((node, i) => (
+            <motion.circle
+              key={`pulse-${i}`}
+              r="1"
+              fill="#3b82f6"
+              initial={{ cx: 50, cy: 50, opacity: 0 }}
+              animate={{
+                cx: [50, node.x],
+                cy: [50, node.y],
+                opacity: [0, 1, 0],
+              }}
             transition={{
               duration: 2,
               repeat: Infinity,

@@ -17,11 +17,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  outputFileTracingRoot: path.resolve(__dirname, '../../'),
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
+    eslint: {
     ignoreDuringBuilds: true,
   },
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
