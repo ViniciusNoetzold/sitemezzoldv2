@@ -16,6 +16,7 @@ interface GlowingEffectProps {
   movementDuration?: number;
   borderWidth?: number;
 }
+
 const GlowingEffect = memo(
   ({
     blur = 0,
@@ -184,7 +185,5 @@ const GlowingEffect = memo(
     );
   }
 );
-
 GlowingEffect.displayName = "GlowingEffect";
-
 export { GlowingEffect };

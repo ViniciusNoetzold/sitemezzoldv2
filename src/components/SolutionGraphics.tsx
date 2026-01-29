@@ -69,6 +69,20 @@ export function NetworkConstellation() {
     { x: 80, y: 70 },
   ];
 
+  const [mounted, setMounted] = (require("react")).useState(false);
+
+  (require("react")).useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return (
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden min-h-[250px]">
+       <span className="absolute bottom-4 left-4 text-[10px] font-mono text-blue-400/50 uppercase tracking-widest">
+        Nodes: Active
+      </span>
+    </div>
+  );
+
   return (
     <div className="relative w-full h-full flex items-center justify-center overflow-hidden min-h-[250px]">
       <svg className="w-full h-full max-w-[300px] max-h-[300px]" viewBox="0 0 100 100">

@@ -4,44 +4,54 @@ import { motion } from "framer-motion";
 import { AnimatedCube } from "./ui/AnimatedCube";
 import { AnimatedNetwork } from "./ui/AnimatedNetwork";
 import { AnimatedGear } from "./ui/AnimatedGear";
+import { GlowingEffect } from "./ui/glowing-effect";
 
 const services = [
   {
     id: "01",
-    title: "Micro-SaaS",
-    subtitle: "SYS.AGILITY",
-    description: "Ecossistemas de produto lean construídos para resolver um único problema de alto valor com clareza e velocidade implacáveis.",
+    title: "Micro-SaaS Architecture",
+    subtitle: "AGILE_UNIT",
+    description: "Sistemas de produto lean projetados para resolver problemas críticos com arquitetura de alta precisão e escalabilidade imediata.",
+    color: "cyan",
+    accentColor: "text-cyan-400",
+    borderColor: "group-hover:border-cyan-500/30",
     specs: [
-      { label: "ARCHITECTURE", value: "Serverless / Edge" },
-      { label: "FOCUS", value: "Single Utility" },
-      { label: "DEPLOY TIME", value: "< 200ms" },
-      { label: "STATUS", value: "Ready_", isStatus: true },
+      { label: "ARCHITECTURE", value: "Edge / Serverless" },
+      { label: "LATENCY", value: "< 50ms" },
+      { label: "PROVISION", value: "Instant" },
+      { label: "STATUS", value: "Production_Ready", isStatus: true },
     ],
     animation: <AnimatedCube />,
   },
   {
     id: "02",
-    title: "Full SaaS",
-    subtitle: "SYS.SCALE",
-    description: "Plataformas completas com arquitetura multi-tenant, camadas de analytics e dashboards de nível executivo.",
+    title: "Full SaaS Ecosystem",
+    subtitle: "ENTERPRISE_CORE",
+    description: "Plataformas robustas com arquitetura multi-tenant, infraestrutura distribuída e inteligência analítica em tempo real.",
+    color: "blue",
+    accentColor: "text-blue-400",
+    borderColor: "group-hover:border-blue-500/30",
     specs: [
-      { label: "ARCHITECTURE", value: "Multi-tenant / Microservices" },
-      { label: "SCALE", value: "Global / Enterprise" },
-      { label: "DATA LAYER", value: "Distributed SQL" },
-      { label: "SECURITY", value: "SOC2_Compliant", isLink: true },
+      { label: "ARCHITECTURE", value: "Multi-tenant / K8s" },
+      { label: "THROUGHPUT", value: "10k+ Req/s" },
+      { label: "DB_LAYER", value: "Geo-Distributed" },
+      { label: "COMPLIANCE", value: "Enterprise_Grade", isLink: true },
     ],
     animation: <AnimatedNetwork />,
   },
   {
     id: "03",
-    title: "Automações",
-    subtitle: "SYS.AUTO",
-    description: "Pipelines de automação de alta performance que rodam silenciosamente em segundo plano, entregando impacto mensurável.",
+    title: "Intelligent Automation",
+    subtitle: "PIPELINE_FLOW",
+    description: "Workflows autônomos de alta performance que operam em camadas de back-end, garantindo eficiência operacional absoluta.",
+    color: "emerald",
+    accentColor: "text-emerald-400",
+    borderColor: "group-hover:border-emerald-500/30",
     specs: [
-      { label: "ARCHITECTURE", value: "Event-Driven" },
-      { label: "VISIBILITY", value: "Background / Invisible" },
-      { label: "THROUGHPUT", value: "High Volume" },
-      { label: "UPTIME", value: "99.99%", isGreen: true },
+      { label: "ENGINE", value: "Event-Driven" },
+      { label: "RELIABILITY", value: "99.999%" },
+      { label: "INTEGRATION", value: "Full API Sync" },
+      { label: "EXECUTION", value: "Autonomous", isGreen: true },
     ],
     animation: <AnimatedGear />,
   },
@@ -56,10 +66,10 @@ export function Services() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-[10px] uppercase tracking-[0.2em] text-emerald-400"
+            className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] uppercase tracking-[0.2em] text-white/50"
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            System Online
+            <div className="w-1.5 h-1.5 rounded-full bg-electric-red animate-pulse shadow-[0_0_8px_#ff0000]" />
+            Capacidades Técnicas
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -67,7 +77,7 @@ export function Services() {
             viewport={{ once: true }}
             className="text-5xl md:text-8xl font-black text-white tracking-tight"
           >
-            SOLUÇÕES IMERSIVAS
+            SOLUÇÕES DE ELITE
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -76,11 +86,11 @@ export function Services() {
             transition={{ delay: 0.1 }}
             className="text-lg md:text-xl text-white/50 font-mono"
           >
-            <span className="text-white/30">&lt;init&gt;</span> Foco, escala e performance invisível. <span className="text-white/30">&lt;/init&gt;</span>
+            <span className="text-white/30">&lt;scope&gt;</span> Engenharia de precisão para o próximo nível. <span className="text-white/30">&lt;/scope&gt;</span>
           </motion.p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-12">
           {services.map((service, index) => (
             <motion.div
               key={service.id}
@@ -88,23 +98,28 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-0 border border-white/5 rounded-[1.5rem] overflow-hidden bg-[#0a0a0a]/80 backdrop-blur-xl group hover:border-white/10 transition-colors relative"
+              className={`grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-0 border border-white/5 rounded-[2rem] overflow-hidden bg-[#050505]/60 backdrop-blur-2xl group transition-all duration-700 relative ${service.borderColor}`}
             >
-              {/* Subtle Grid Pattern */}
-              <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-                   style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+              <GlowingEffect
+                spread={40}
+                glow
+                disabled={false}
+                proximity={64}
+                inactiveZone={0.01}
+                borderWidth={1.5}
+              />
 
               {/* Content Side */}
               <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/5 relative z-10">
                 <div>
-                  <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center justify-between mb-10">
                     <div className="flex items-center gap-4">
-                      <span className="text-emerald-400 font-mono text-xs tracking-widest">[ {service.id} ]</span>
-                      <div className="h-[1px] w-12 bg-emerald-500/20" />
+                      <span className={`${service.accentColor} font-mono text-xs tracking-widest`}>[ {service.id} ]</span>
+                      <div className="h-[1px] w-12 bg-white/10" />
                     </div>
                     <span className="text-white/20 font-mono text-[10px] tracking-[0.3em]">{service.subtitle}</span>
                   </div>
-                  <h3 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter group-hover:text-emerald-400 transition-colors duration-500">
+                  <h3 className="text-4xl md:text-6xl font-black text-white mb-8 tracking-tighter group-hover:tracking-normal transition-all duration-700">
                     {service.title}
                   </h3>
                   <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl mb-12">
@@ -112,12 +127,12 @@ export function Services() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-y-8 gap-x-12 border-t border-white/5 pt-10">
+                <div className="grid grid-cols-2 gap-y-10 gap-x-12 border-t border-white/5 pt-12">
                   {service.specs.map((spec) => (
-                    <div key={spec.label}>
-                      <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2 font-mono">{spec.label}</p>
+                    <div key={spec.label} className="group/spec">
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-3 font-mono transition-colors group-hover/spec:text-white/50">{spec.label}</p>
                       <p className={`text-sm font-bold tracking-tight ${
-                        spec.isStatus ? "text-emerald-400" : 
+                        spec.isStatus ? "text-cyan-400" : 
                         spec.isLink ? "text-blue-400" : 
                         spec.isGreen ? "text-emerald-400" :
                         "text-white"
@@ -130,9 +145,18 @@ export function Services() {
               </div>
 
               {/* Animation Side */}
-              <div className="relative bg-black/60 overflow-hidden min-h-[400px] flex items-center justify-center">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.03)_0%,transparent_70%)]" />
-                {service.animation}
+              <div className="relative bg-black/40 overflow-hidden min-h-[450px] flex items-center justify-center">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_70%)] opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="relative z-10 transition-transform duration-700 group-hover:scale-110">
+                  {service.animation}
+                </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute bottom-8 right-8 flex gap-2">
+                  <div className="w-1 h-1 bg-white/20 rounded-full" />
+                  <div className="w-1 h-1 bg-white/20 rounded-full" />
+                  <div className="w-1 h-1 bg-white/40 rounded-full" />
+                </div>
               </div>
             </motion.div>
           ))}

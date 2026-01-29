@@ -17,6 +17,20 @@ export function AnimatedNetwork() {
     [0, 1], [1, 2], [2, 3], [3, 4], [4, 0]
   ];
 
+  const [mounted, setMounted] = (require("react")).useState(false);
+
+  (require("react")).useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return (
+    <div className="w-full h-full min-h-[300px] flex items-center justify-center relative bg-transparent">
+       <div className="absolute bottom-4 left-4 text-[10px] tracking-[0.2em] text-blue-400/50 font-mono">
+          NODES: ACTIVE
+        </div>
+    </div>
+  );
+
   return (
     <div className="w-full h-full min-h-[300px] flex items-center justify-center relative bg-transparent">
       <svg width="100%" height="100%" viewBox="0 0 500 400" className="max-w-[400px]">
@@ -53,10 +67,10 @@ export function AnimatedNetwork() {
                   opacity: [0, 1, 0]
                 }}
               transition={{
-                duration: 2 + Math.random() * 2,
+                duration: 2 + (i % 3),
                 repeat: Infinity,
                 ease: "linear",
-                delay: Math.random() * 2
+                delay: i * 0.2
               }}
             />
           </g>
