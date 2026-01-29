@@ -75,25 +75,25 @@ export function AnimatedNetwork() {
               ease: "easeInOut"
             }}
           >
-            <circle
-              cx={node.x}
-              cy={node.y}
-              r={i === 5 ? 8 : 4}
-              fill={i === 5 ? "#3b82f6" : "#1d4ed8"}
-              filter="url(#glow)"
-            />
-            {i === 5 && (
-              <motion.circle
+              <circle
                 cx={node.x}
                 cy={node.y}
-                r="12"
-                stroke="#3b82f6"
-                strokeWidth="1"
-                fill="none"
-                animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                r={i === 5 ? 8 : 4}
+                fill={i === 5 ? "#38bdf8" : "#0ea5e9"}
+                filter="url(#glow)"
               />
-            )}
+              {i === 5 && (
+                <motion.circle
+                  cx={node.x}
+                  cy={node.y}
+                  r="12"
+                  stroke="#38bdf8"
+                  strokeWidth="1"
+                  fill="none"
+                  animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              )}
           </motion.g>
         ))}
       </svg>

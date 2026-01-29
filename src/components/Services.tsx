@@ -80,7 +80,7 @@ export function Services() {
           </motion.p>
         </div>
 
-        <div className="space-y-12">
+        <div className="space-y-6">
           {services.map((service, index) => (
             <motion.div
               key={service.id}
@@ -88,30 +88,37 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-0 border border-white/5 rounded-[2rem] overflow-hidden bg-white/[0.02] backdrop-blur-3xl group hover:border-white/10 transition-colors"
+              className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-0 border border-white/5 rounded-[1.5rem] overflow-hidden bg-[#0a0a0a]/80 backdrop-blur-xl group hover:border-white/10 transition-colors relative"
             >
+              {/* Subtle Grid Pattern */}
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+                   style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
               {/* Content Side */}
-              <div className="p-8 md:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/5">
+              <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/5 relative z-10">
                 <div>
                   <div className="flex items-center justify-between mb-8">
-                    <span className="text-emerald-400 font-mono text-sm tracking-widest">[ {service.id} ]</span>
+                    <div className="flex items-center gap-4">
+                      <span className="text-emerald-400 font-mono text-xs tracking-widest">[ {service.id} ]</span>
+                      <div className="h-[1px] w-12 bg-emerald-500/20" />
+                    </div>
                     <span className="text-white/20 font-mono text-[10px] tracking-[0.3em]">{service.subtitle}</span>
                   </div>
-                  <h3 className="text-4xl md:text-6xl font-black text-white mb-8 tracking-tighter group-hover:text-emerald-400 transition-colors duration-500">
+                  <h3 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tighter group-hover:text-emerald-400 transition-colors duration-500">
                     {service.title}
                   </h3>
-                  <p className="text-white/50 text-lg md:text-xl leading-relaxed max-w-xl mb-12">
+                  <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-xl mb-12">
                     {service.description}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-y-8 gap-x-12 border-t border-white/5 pt-12">
+                <div className="grid grid-cols-2 gap-y-8 gap-x-12 border-t border-white/5 pt-10">
                   {service.specs.map((spec) => (
                     <div key={spec.label}>
                       <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2 font-mono">{spec.label}</p>
                       <p className={`text-sm font-bold tracking-tight ${
                         spec.isStatus ? "text-emerald-400" : 
-                        spec.isLink ? "text-blue-400 underline underline-offset-4" : 
+                        spec.isLink ? "text-blue-400" : 
                         spec.isGreen ? "text-emerald-400" :
                         "text-white"
                       }`}>
@@ -123,8 +130,8 @@ export function Services() {
               </div>
 
               {/* Animation Side */}
-              <div className="relative bg-black/40 overflow-hidden min-h-[400px]">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05)_0%,transparent_70%)]" />
+              <div className="relative bg-black/60 overflow-hidden min-h-[400px] flex items-center justify-center">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.03)_0%,transparent_70%)]" />
                 {service.animation}
               </div>
             </motion.div>

@@ -6,22 +6,41 @@ import { Edges } from "@react-three/drei";
 import * as THREE from "three";
 
 function Cube() {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const outerRef = useRef<THREE.Mesh>(null);
+  const innerRef = useRef<THREE.Mesh>(null);
 
   useFrame((state, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += delta * 0.2;
-      meshRef.current.rotation.y += delta * 0.3;
+    if (outerRef.current) {
+      outerRef.current.rotation.x += delta * 0.15;
+      outerRef.current.rotation.y += delta * 0.2;
+    }
+    if (innerRef.current) {
+      innerRef.current.rotation.x -= delta * 0.25;
+      innerRef.current.rotation.y -= delta * 0.3;
     }
   });
 
   return (
-    <mesh ref={meshRef}>
-      <boxGeometry args={[2.5, 2.5, 2.5]} />
-      <meshBasicMaterial transparent opacity={0} />
-      <Edges scale={1} threshold={15} color="#00ffff" />
-      <meshBasicMaterial color="#00ffff" wireframe opacity={0.1} transparent />
-    </mesh>
+    <group>
+      {/* Outer Cube */}
+      <mesh ref={outerRef}>
+        <boxGeometry args={[2.8, 2.8, 2.8]} />
+        <meshBasicMaterial transparent opacity={0} />
+        <Edges scale={1} threshold={15} color="#00ffff" />
+      </mesh>
+      
+      {/* Inner Cube */}
+      <mesh ref={innerRef}>
+        <boxGeometry args={[1.5, 1.5, 1.5]} />
+        <meshBasicMaterial transparent opacity={0} />
+        <Edges scale={1} threshold={15} color="#00ffff" />
+        <meshBasicMaterial color="#00ffff" wireframe opacity={0.05} transparent />
+      </mesh>
+
+      {/* Glow effect at corners */}
+      <pointLight position={[2, 2, 2]} intensity={0.5} color="#00ffff" />
+      <pointLight position={[-2, -2, -2]} intensity={0.5} color="#00ffff" />
+    </group>
   );
 }
 
