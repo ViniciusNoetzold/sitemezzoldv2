@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+const nodes = [
+  { x: 100, y: 100 },
+  { x: 300, y: 80 },
+  { x: 400, y: 200 },
+  { x: 250, y: 350 },
+  { x: 100, y: 300 },
+  { x: 250, y: 200 }, // Center node
+];
+
+const connections = [
+  [0, 5], [1, 5], [2, 5], [3, 5], [4, 5],
+  [0, 1], [1, 2], [2, 3], [3, 4], [4, 0]
+];
+
 export function AnimatedNetwork() {
-  const nodes = [
-    { x: 100, y: 100 },
-    { x: 300, y: 80 },
-    { x: 400, y: 200 },
-    { x: 250, y: 350 },
-    { x: 100, y: 300 },
-    { x: 250, y: 200 }, // Center node
-  ];
-
-  const connections = [
-    [0, 5], [1, 5], [2, 5], [3, 5], [4, 5],
-    [0, 1], [1, 2], [2, 3], [3, 4], [4, 0]
-  ];
-
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -44,36 +44,41 @@ export function AnimatedNetwork() {
         </defs>
         
         {/* Connections */}
-        {connections.map(([start, end], i) => (
-          <g key={i}>
-            <line
-              x1={nodes[start].x}
-              y1={nodes[start].y}
-              x2={nodes[end].x}
-              y2={nodes[end].y}
-              stroke="rgba(59, 130, 246, 0.2)"
-              strokeWidth="1"
-            />
+        {connections.map(([start, end], i) => {
+          const startNode = nodes[start];
+          const endNode = nodes[end];
+          if (!startNode || !endNode) return null;
+          
+          return (
+            <g key={i}>
+              <line
+                x1={startNode.x}
+                y1={startNode.y}
+                x2={endNode.x}
+                y2={endNode.y}
+                stroke="rgba(59, 130, 246, 0.2)"
+                strokeWidth="1"
+              />
               <motion.circle
                 r="2"
                 fill="#3b82f6"
                 filter="url(#glow)"
-                cx={nodes[start].x}
-                cy={nodes[start].y}
+                initial={{ cx: startNode.x, cy: startNode.y, opacity: 0 }}
                 animate={{ 
-                  cx: [nodes[start].x, nodes[end].x],
-                  cy: [nodes[start].y, nodes[end].y],
+                  cx: [startNode.x, endNode.x],
+                  cy: [startNode.y, endNode.y],
                   opacity: [0, 1, 0]
                 }}
-              transition={{
-                duration: 2 + (i % 3),
-                repeat: Infinity,
-                ease: "linear",
-                delay: i * 0.2
-              }}
-            />
-          </g>
-        ))}
+                transition={{
+                  duration: 2 + (i % 3),
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: i * 0.2
+                }}
+              />
+            </g>
+          );
+        })}
 
         {/* Nodes */}
         {nodes.map((node, i) => (
@@ -89,25 +94,25 @@ export function AnimatedNetwork() {
               ease: "easeInOut"
             }}
           >
-              <circle
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r={i === 5 ? 8 : 4}
+              fill={i === 5 ? "#38bdf8" : "#0ea5e9"}
+              filter="url(#glow)"
+            />
+            {i === 5 && (
+              <motion.circle
                 cx={node.x}
                 cy={node.y}
-                r={i === 5 ? 8 : 4}
-                fill={i === 5 ? "#38bdf8" : "#0ea5e9"}
-                filter="url(#glow)"
+                r="12"
+                stroke="#38bdf8"
+                strokeWidth="1"
+                fill="none"
+                animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
               />
-              {i === 5 && (
-                <motion.circle
-                  cx={node.x}
-                  cy={node.y}
-                  r="12"
-                  stroke="#38bdf8"
-                  strokeWidth="1"
-                  fill="none"
-                  animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              )}
+            )}
           </motion.g>
         ))}
       </svg>
@@ -117,3 +122,4 @@ export function AnimatedNetwork() {
     </div>
   );
 }
+

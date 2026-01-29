@@ -144,15 +144,15 @@ export function Services() {
                 </div>
               </div>
 
-              {/* Animation Side */}
-              <div className="relative bg-black/40 overflow-hidden min-h-[450px] flex items-center justify-center">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_70%)] opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
-                <div className="relative z-10 transition-transform duration-700 group-hover:scale-110">
-                  {service.animation}
-                </div>
-                
-                {/* Decorative Elements */}
-                <div className="absolute bottom-8 right-8 flex gap-2">
+                {/* Animation Side */}
+                <div className="relative bg-black/40 overflow-hidden min-h-[450px]">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_70%)] opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="absolute inset-0 z-10 transition-transform duration-700 group-hover:scale-110">
+                    {service.animation}
+                  </div>
+                  
+                  {/* Decorative Elements */}
+                  <div className="absolute bottom-8 right-8 flex gap-2 z-20">
                   <div className="w-1 h-1 bg-white/20 rounded-full" />
                   <div className="w-1 h-1 bg-white/20 rounded-full" />
                   <div className="w-1 h-1 bg-white/40 rounded-full" />

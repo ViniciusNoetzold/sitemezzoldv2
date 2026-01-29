@@ -46,11 +46,17 @@ function Cube() {
 
 export function AnimatedCube() {
   return (
-    <div className="w-full h-full min-h-[300px] flex items-center justify-center relative">
-      <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-        <ambientLight intensity={0.5} />
-        <Cube />
-      </Canvas>
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-full h-full relative">
+        <Canvas 
+          camera={{ position: [0, 0, 5], fov: 45 }}
+          dpr={[1, 2]}
+          gl={{ antialias: true }}
+        >
+          <ambientLight intensity={0.5} />
+          <Cube />
+        </Canvas>
+      </div>
       <div className="absolute bottom-4 right-4 text-[10px] tracking-[0.2em] text-cyan-400/50 font-mono">
         CUBE_PRIMITIVE_RENDER
       </div>
