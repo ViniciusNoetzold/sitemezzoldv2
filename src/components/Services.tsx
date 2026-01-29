@@ -1,127 +1,135 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { GlowingEffect } from './ui/glowing-effect';
+import { motion } from "framer-motion";
+import { AnimatedCube } from "./ui/AnimatedCube";
+import { AnimatedNetwork } from "./ui/AnimatedNetwork";
+import { AnimatedGear } from "./ui/AnimatedGear";
 
-const dashboardPillars = [
+const services = [
   {
-    title: 'Inteligência de Receita',
-    detail: 'Acompanhe MRR, NRR e saúde de cohort em uma única visão.',
-    tag: 'MRR · NRR · LTV',
+    id: "01",
+    title: "Micro-SaaS",
+    subtitle: "SYS.AGILITY",
+    description: "Ecossistemas de produto lean construídos para resolver um único problema de alto valor com clareza e velocidade implacáveis.",
+    specs: [
+      { label: "ARCHITECTURE", value: "Serverless / Edge" },
+      { label: "FOCUS", value: "Single Utility" },
+      { label: "DEPLOY TIME", value: "< 200ms" },
+      { label: "STATUS", value: "Ready_", isStatus: true },
+    ],
+    animation: <AnimatedCube />,
   },
   {
-    title: 'Operações de Crescimento',
-    detail: 'Visões de ativação, retenção e ciclo de vida para iteração rápida.',
-    tag: 'Ativação · Retenção',
+    id: "02",
+    title: "Full SaaS",
+    subtitle: "SYS.SCALE",
+    description: "Plataformas completas com arquitetura multi-tenant, camadas de analytics e dashboards de nível executivo.",
+    specs: [
+      { label: "ARCHITECTURE", value: "Multi-tenant / Microservices" },
+      { label: "SCALE", value: "Global / Enterprise" },
+      { label: "DATA LAYER", value: "Distributed SQL" },
+      { label: "SECURITY", value: "SOC2_Compliant", isLink: true },
+    ],
+    animation: <AnimatedNetwork />,
   },
   {
-    title: 'Pulso do Cliente',
-    detail: 'Insights comportamentais com relatórios prontos para narrativa.',
-    tag: 'Engajamento · Insights',
-  },
-  {
-    title: 'Modo Executivo',
-    detail: 'Snapshots prontos para o board que revelam o sinal instantaneamente.',
-    tag: 'Runway · Previsões',
+    id: "03",
+    title: "Automações",
+    subtitle: "SYS.AUTO",
+    description: "Pipelines de automação de alta performance que rodam silenciosamente em segundo plano, entregando impacto mensurável.",
+    specs: [
+      { label: "ARCHITECTURE", value: "Event-Driven" },
+      { label: "VISIBILITY", value: "Background / Invisible" },
+      { label: "THROUGHPUT", value: "High Volume" },
+      { label: "UPTIME", value: "99.99%", isGreen: true },
+    ],
+    animation: <AnimatedGear />,
   },
 ];
 
 export function Services() {
   return (
     <section id="services" className="py-32 px-6 relative overflow-hidden bg-transparent">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col items-center text-center mb-16 space-y-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col items-center text-center mb-24 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-[10px] uppercase tracking-[0.2em] text-emerald-400"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            System Online
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-8xl font-black text-white tracking-tight"
+          >
+            SOLUÇÕES IMERSIVAS
+          </motion.h2>
           <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-xs md:text-sm uppercase tracking-[0.4em] text-white/50"
-            >
-              Dashboards Especializados
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-4xl md:text-6xl font-black text-white"
-            >
-              Salas de Controle em Glassmorphism
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-lg text-white/50 max-w-3xl"
-            >
-              Sistemas de dashboard SaaS-grade inspirados em plataformas como NutriFuel, combinando profundidade cinematográfica com clareza para tomada de decisão.
-            </motion.p>
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-lg md:text-xl text-white/50 font-mono"
+          >
+            <span className="text-white/30">&lt;init&gt;</span> Foco, escala e performance invisível. <span className="text-white/30">&lt;/init&gt;</span>
+          </motion.p>
         </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1.25fr] gap-10 items-stretch">
+        <div className="space-y-12">
+          {services.map((service, index) => (
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              key={service.id}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative glass rounded-[2.5rem] border border-white/10 p-10 md:p-12 flex flex-col justify-between"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-0 border border-white/5 rounded-[2rem] overflow-hidden bg-white/[0.02] backdrop-blur-3xl group hover:border-white/10 transition-colors"
             >
-              <GlowingEffect
-                spread={40}
-                glow={true}
-                disabled={false}
-                proximity={64}
-                inactiveZone={0.01}
-                borderWidth={2}
-              />
-              <div className="space-y-4">
-                  <p className="text-xs uppercase tracking-[0.4em] text-white/50">Dashboard Core</p>
-                  <h3 className="text-3xl md:text-4xl font-black text-white">Analytics prontos para executivos com profundidade cinematográfica.</h3>
-                  <p className="text-white/55 text-lg leading-relaxed">
-                    Criamos layouts em camadas baseados em glass com sinais em tempo real, filtros multi-tenant e motion imersivo que mantém equipes alinhadas.
+              {/* Content Side */}
+              <div className="p-8 md:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/5">
+                <div>
+                  <div className="flex items-center justify-between mb-8">
+                    <span className="text-emerald-400 font-mono text-sm tracking-widest">[ {service.id} ]</span>
+                    <span className="text-white/20 font-mono text-[10px] tracking-[0.3em]">{service.subtitle}</span>
+                  </div>
+                  <h3 className="text-4xl md:text-6xl font-black text-white mb-8 tracking-tighter group-hover:text-emerald-400 transition-colors duration-500">
+                    {service.title}
+                  </h3>
+                  <p className="text-white/50 text-lg md:text-xl leading-relaxed max-w-xl mb-12">
+                    {service.description}
                   </p>
                 </div>
-                <div className="mt-10 grid grid-cols-2 gap-4">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-6">
-                    <p className="text-xs uppercase tracking-[0.3em] text-white/40">Sinal ao Vivo</p>
-                    <p className="mt-3 text-2xl font-bold text-white">98.6%</p>
-                    <p className="text-white/40 text-sm">Uptime</p>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-6">
-                    <p className="text-xs uppercase tracking-[0.3em] text-white/40">Pipeline</p>
-                    <p className="mt-3 text-2xl font-bold text-white">R$2.4M</p>
-                    <p className="text-white/40 text-sm">Previsão</p>
-                  </div>
-                </div>
-            </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {dashboardPillars.map((pillar, index) => (
-                <motion.div
-                  key={pillar.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className="relative glass rounded-3xl border border-white/10 p-6 flex flex-col justify-between"
-                >
-                  <GlowingEffect
-                    spread={40}
-                    glow={true}
-                    disabled={false}
-                    proximity={64}
-                    inactiveZone={0.01}
-                    borderWidth={2}
-                  />
-                  <div>
-                    <h4 className="text-xl font-bold text-white">{pillar.title}</h4>
-                    <p className="mt-3 text-white/55 leading-relaxed text-sm">{pillar.detail}</p>
-                  </div>
-                  <span className="mt-6 inline-flex w-fit px-3 py-2 rounded-full border border-white/15 text-[10px] uppercase tracking-[0.3em] text-white/50 bg-white/5">
-                    {pillar.tag}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+                <div className="grid grid-cols-2 gap-y-8 gap-x-12 border-t border-white/5 pt-12">
+                  {service.specs.map((spec) => (
+                    <div key={spec.label}>
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2 font-mono">{spec.label}</p>
+                      <p className={`text-sm font-bold tracking-tight ${
+                        spec.isStatus ? "text-emerald-400" : 
+                        spec.isLink ? "text-blue-400 underline underline-offset-4" : 
+                        spec.isGreen ? "text-emerald-400" :
+                        "text-white"
+                      }`}>
+                        {spec.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Animation Side */}
+              <div className="relative bg-black/40 overflow-hidden min-h-[400px]">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05)_0%,transparent_70%)]" />
+                {service.animation}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
