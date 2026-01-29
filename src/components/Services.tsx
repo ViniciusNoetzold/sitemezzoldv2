@@ -9,49 +9,49 @@ import { GlowingEffect } from "./ui/glowing-effect";
 const services = [
   {
     id: "01",
-    title: "Micro-SaaS Architecture",
+    title: "Core Micro-SaaS Systems",
     subtitle: "AGILE_UNIT",
-    description: "Sistemas de produto lean projetados para resolver problemas críticos com arquitetura de alta precisão e escalabilidade imediata.",
+    description: "Engenharia de precisão para MVPs e micro-produtos escaláveis. Desenvolvemos arquiteturas lean que priorizam velocidade de carregamento e conversão através de processos otimizados.",
     color: "cyan",
     accentColor: "text-cyan-400",
     borderColor: "group-hover:border-cyan-500/30",
     specs: [
-      { label: "ARCHITECTURE", value: "Edge / Serverless" },
-      { label: "LATENCY", value: "< 50ms" },
-      { label: "PROVISION", value: "Instant" },
+      { label: "ARCHITECTURE", value: "Edge Computing" },
+      { label: "LATENCY", value: "< 30ms Avg" },
+      { label: "DEPLOY", value: "Automated CI/CD" },
       { label: "STATUS", value: "Production_Ready", isStatus: true },
     ],
     animation: <AnimatedCube />,
   },
   {
     id: "02",
-    title: "Full SaaS Ecosystem",
+    title: "Enterprise SaaS Ecosystems",
     subtitle: "ENTERPRISE_CORE",
-    description: "Plataformas robustas com arquitetura multi-tenant, infraestrutura distribuída e inteligência analítica em tempo real.",
+    description: "Plataformas robustas e multi-tenant desenhadas para escala global. Infraestrutura resiliente com foco em segurança de dados e alta disponibilidade operacional em tempo real.",
     color: "blue",
     accentColor: "text-blue-400",
     borderColor: "group-hover:border-blue-500/30",
     specs: [
-      { label: "ARCHITECTURE", value: "Multi-tenant / K8s" },
-      { label: "THROUGHPUT", value: "10k+ Req/s" },
-      { label: "DB_LAYER", value: "Geo-Distributed" },
-      { label: "COMPLIANCE", value: "Enterprise_Grade", isLink: true },
+      { label: "INFRASTRUCTURE", value: "Distributed K8s" },
+      { label: "THROUGHPUT", value: "50k+ Req/m" },
+      { label: "DB_LAYER", value: "Global Replication" },
+      { label: "COMPLIANCE", value: "SOC2 Compliant", isLink: true },
     ],
     animation: <AnimatedNetwork />,
   },
   {
     id: "03",
-    title: "Intelligent Automation",
+    title: "Deep Process Automation",
     subtitle: "PIPELINE_FLOW",
-    description: "Workflows autônomos de alta performance que operam em camadas de back-end, garantindo eficiência operacional absoluta.",
+    description: "Automações inteligentes que conectam seu ecossistema digital. Workflows autônomos que eliminam gargalos operacionais e reduzem custos drásticos em escala industrial.",
     color: "emerald",
     accentColor: "text-emerald-400",
     borderColor: "group-hover:border-emerald-500/30",
     specs: [
-      { label: "ENGINE", value: "Event-Driven" },
-      { label: "RELIABILITY", value: "99.999%" },
-      { label: "INTEGRATION", value: "Full API Sync" },
-      { label: "EXECUTION", value: "Autonomous", isGreen: true },
+      { label: "ENGINE", value: "Event-Driven Logic" },
+      { label: "RELIABILITY", value: "99.99% Uptime" },
+      { label: "CONNECTIVITY", value: "Custom Webhooks" },
+      { label: "EXECUTION", value: "Fully Autonomous", isGreen: true },
     ],
     animation: <AnimatedGear />,
   },
@@ -98,11 +98,11 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className={`grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-0 border border-white/5 rounded-[2rem] overflow-hidden bg-[#050505]/60 backdrop-blur-2xl group transition-all duration-700 relative ${service.borderColor}`}
+              className={`list-none relative grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-0 border border-white/5 rounded-[2rem] overflow-hidden bg-[#050505]/60 backdrop-blur-2xl group transition-all duration-700 ${service.borderColor}`}
             >
               <GlowingEffect
                 spread={40}
-                glow
+                glow={true}
                 disabled={false}
                 proximity={64}
                 inactiveZone={0.01}

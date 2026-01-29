@@ -1,5 +1,4 @@
-"use client";
-
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export function AnimatedNetwork() {
@@ -17,9 +16,9 @@ export function AnimatedNetwork() {
     [0, 1], [1, 2], [2, 3], [3, 4], [4, 0]
   ];
 
-  const [mounted, setMounted] = (require("react")).useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  (require("react")).useEffect(() => {
+  useEffect(() => {
     setMounted(true);
   }, []);
 
