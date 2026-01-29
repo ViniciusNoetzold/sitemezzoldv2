@@ -6,6 +6,8 @@ import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Portfolio } from "@/components/Portfolio";
 import { Services } from "@/components/Services";
+import { Process } from "@/components/Process";
+import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { LogoShowcase } from "@/components/LogoShowcase";
 import { GooeyText } from "@/components/ui/gooey-text-morphing";
@@ -152,39 +154,11 @@ export default function Home() {
 
             <div>
               <Services />
+              <Process />
               <Portfolio />
             </div>
 
-            <section id="about" className="py-32 px-6 relative z-10 bg-transparent">
-              <div className="max-w-5xl mx-auto">
-                <div className="glass rounded-[3rem] border border-white/10 p-12 md:p-20 text-center">
-                  <motion.h2
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    className="text-4xl md:text-6xl font-black mb-8 text-white"
-                  >
-                    Pronto para Construir o <span className="text-emerald-green">Próximo</span> Grande Passo?
-                  </motion.h2>
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                    className="text-lg text-white/60 mb-12 max-w-3xl mx-auto"
-                  >
-                    Parceria com Mezzold Studio para engenharia de classe mundial, motion UI fluido e estratégia de produto de elite.
-                  </motion.p>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-12 py-5 rounded-full bg-white text-black font-black text-lg hover:shadow-[0_0_40px_rgba(6,182,212,0.35)] transition-all"
-                  >
-                    Agendar uma Conversa
-                  </motion.button>
-                </div>
-              </div>
-            </section>
+            <Contact />
 
             <div>
               <LogoShowcase />

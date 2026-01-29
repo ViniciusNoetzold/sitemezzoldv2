@@ -4,25 +4,28 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 const ecosystems = [
   {
-    title: 'Micro-SaaS',
-    focus: 'Agilidade & Foco',
+    title: 'Nexus OS',
+    focus: 'DASHBOARD ESTRATÉGICO',
     description:
-      'Ecossistemas de produto lean construídos para resolver um único problema de alto valor com clareza e velocidade implacáveis.',
-    highlights: ['Iteração rápida', 'UX preciso', 'Loops de valor focados'],
+      'Uma interface de comando para logística orientada por IA, apresentando visualização de dados em tempo real e orquestração de frota global.',
+    highlights: ['Three.js Canvas', 'Real-time Data', 'High Precision UI'],
+    visualLabel: 'NEXUS_v2.0_INTERFACE'
   },
   {
-    title: 'Full SaaS',
-    focus: 'Escala & Inteligência',
+    title: 'Aura Fintech',
+    focus: 'PLATAFORMA BANCÁRIA',
     description:
-      'Plataformas completas com arquitetura multi-tenant, camadas de analytics e dashboards de nível executivo.',
-    highlights: ['Dashboards enterprise', 'Comando operacional', 'Escala global'],
+      'Reinventando a experiência bancária com motion UI cinematográfico, segurança criptográfica de ponta e fluxos transacionais sem fricção.',
+    highlights: ['Biometric Auth', 'Glassmorphism', 'Ultra Smooth'],
+    visualLabel: 'AURA_CORE_RENDER'
   },
   {
-    title: 'Automações',
-    focus: 'Performance Invisível',
+    title: 'Flux Engine',
+    focus: 'AUTOMAÇÃO BACKEND',
     description:
-      'Pipelines de automação de alta performance que rodam silenciosamente em segundo plano, entregando impacto mensurável.',
-    highlights: ['Orquestração de workflows', 'Resiliência de sistema', 'Ops sem fricção'],
+      'Visualização técnica de pipelines de automação complexos, permitindo que desenvolvedores monitorem trilhões de eventos em uma única tela.',
+    highlights: ['Event-Driven', 'Nodes System', 'Low Latency'],
+    visualLabel: 'FLUX_PIPELINE_VIEW'
   },
 ];
 
@@ -40,7 +43,7 @@ export function Portfolio() {
                 viewport={{ once: true }}
                 className="text-xs md:text-sm uppercase tracking-[0.4em] text-white/50"
               >
-                Vitrine de Produtos
+                Trabalhos Selecionados
               </motion.p>
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
@@ -48,7 +51,7 @@ export function Portfolio() {
                 viewport={{ once: true }}
                 className="text-4xl md:text-6xl font-black text-white"
               >
-                Micro-SaaS, Full SaaS, Automações
+                PROJETOS QUE DEFINEM O PADRÃO
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -56,7 +59,7 @@ export function Portfolio() {
                 viewport={{ once: true }}
                 className="text-lg text-white/50 max-w-3xl"
               >
-                Três linhas de produto, uma filosofia cinematográfica de build—foco, escala e performance invisível.
+                Explorando a intersecção entre estética radical e engenharia rigorosa.
               </motion.p>
           </div>
 
@@ -70,14 +73,14 @@ export function Portfolio() {
               }`}
             >
               <div className={`space-y-5 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                <p className="text-xs uppercase tracking-[0.4em] text-white/40">{item.focus}</p>
-                <h3 className="text-3xl md:text-5xl font-black text-white">{item.title}</h3>
+                <p className="text-[10px] font-mono uppercase tracking-[0.4em] text-emerald-400">{item.focus}</p>
+                <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter">{item.title}</h3>
                 <p className="text-white/60 text-lg leading-relaxed">{item.description}</p>
                 <div className="flex flex-wrap gap-3">
                   {item.highlights.map((highlight) => (
                     <span
                       key={highlight}
-                      className="px-4 py-2 rounded-full border border-white/15 text-xs uppercase tracking-widest text-white/60 bg-white/5"
+                      className="px-4 py-2 rounded-full border border-white/15 text-[10px] font-mono uppercase tracking-widest text-white/60 bg-white/5"
                     >
                       {highlight}
                     </span>
@@ -86,17 +89,33 @@ export function Portfolio() {
               </div>
 
               <div className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div className="glass rounded-[2.5rem] border border-white/10 p-8 md:p-12 min-h-[280px] flex flex-col justify-between">
+                  <div className="glass rounded-[2.5rem] border border-white/10 p-8 md:p-12 min-h-[320px] flex flex-col justify-between group overflow-hidden relative">
+                    {/* Background Decorative Grid */}
+                    <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+                         style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+                    
                     <div>
-                      <p className="text-xs uppercase tracking-[0.3em] text-white/40">Renderização Glassmorphism</p>
-                      <h4 className="mt-4 text-2xl md:text-3xl font-bold text-white">
-                        Placeholder de Visualização do Produto
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-white/40">{item.visualLabel}</p>
+                      </div>
+                      <h4 className="text-2xl md:text-3xl font-bold text-white group-hover:text-emerald-400 transition-colors duration-500">
+                        Visualização de Alta Fidelidade
                       </h4>
                     </div>
-                    <div className="mt-10 h-24 rounded-2xl border border-white/10 bg-white/[0.03]" />
+                    
+                    {/* Decorative UI elements */}
+                    <div className="mt-10 flex gap-4">
+                      <div className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.03] flex items-center px-4">
+                        <div className="w-1/2 h-2 bg-white/10 rounded-full" />
+                      </div>
+                      <div className="h-12 w-24 rounded-xl border border-white/10 bg-emerald-500/10" />
+                    </div>
+
+                    {/* Gradient Glows */}
+                    <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-emerald-500/10 blur-[80px]" />
+                    <div className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full bg-blue-500/10 blur-[80px]" />
                   </div>
-                  <div className="absolute -top-6 -right-6 w-32 h-32 rounded-full bg-cyan-bright/15 blur-[60px]" />
-                  <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full bg-emerald-green/15 blur-[80px]" />
                 </div>
             </motion.div>
           ))}
