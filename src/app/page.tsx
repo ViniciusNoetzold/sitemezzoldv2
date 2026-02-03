@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import Lenis from "lenis";
 
 const Dither = dynamic(() => import("@/components/ui/dither"), { ssr: false });
+const AnimatedDunes = dynamic(() => import("@/components/ui/AnimatedDunes"), { ssr: false });
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -117,11 +118,16 @@ export default function Home() {
 
       <Navbar />
 
-      <div className="flex flex-col gap-0 relative z-10">
-        <Hero />
+<div className="flex flex-col gap-0 relative z-10">
+          <Hero />
 
-        <div className="relative">
-          <div className="relative z-10">
+          <div className="relative">
+            {/* Dunas animadas - transição do Hero para as seções */}
+            <div className="absolute inset-0 h-[150vh] pointer-events-none">
+              <AnimatedDunes />
+            </div>
+
+            <div className="relative z-10">
             <section id="who-we-are" className="py-24 px-6 relative z-10 bg-transparent">
               <div className="max-w-5xl mx-auto text-center space-y-6">
                 <motion.p

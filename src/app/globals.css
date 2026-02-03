@@ -141,3 +141,19 @@
 nextjs-portal {
   display: none !important;
 }
+
+/* Animated Dunes Styles */
+.dune-layer {
+  filter: blur(0.5px);
+}
+
+.dune-glow {
+  filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.3));
+}
+
+/* Responsividade para dunas */
+@media (max-width: 768px) {
+  .dune-container svg {
+    height: 200px;
+  }
+}
