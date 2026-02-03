@@ -88,92 +88,88 @@ export default function Home() {
           style={{ scaleX }}
         />
 
-      {/* Unified Background System */}
-      <div className="fixed inset-0 z-0">
-        <div 
-          className="absolute inset-0"
-          style={{ width: '100%', height: '100%' }}
-        >
-          <Dither
-            waveColor={[0.7, 0.1, 1]}
-            disableAnimation={false}
-            enableMouseInteraction={true}
-            mouseRadius={0.6}
-            colorNum={4}
-            waveAmplitude={0.3}
-            waveFrequency={3}
-            waveSpeed={0.05}
+        {/* Background do Hero - Dither Shader (apenas no topo) */}
+        <div className="fixed inset-0 z-0">
+          <div 
+            className="absolute inset-0"
+            style={{ width: '100%', height: '100%' }}
+          >
+            <Dither
+              waveColor={[0.7, 0.1, 1]}
+              disableAnimation={false}
+              enableMouseInteraction={true}
+              mouseRadius={0.6}
+              colorNum={4}
+              waveAmplitude={0.3}
+              waveFrequency={3}
+              waveSpeed={0.05}
+            />
+          </div>
+
+          {/* Gradiente para escurecer gradualmente */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/50 to-[#020202] pointer-events-none" />
+          
+          {/* Escurecimento no scroll */}
+          <motion.div 
+            style={{ opacity: darkeningOpacity }}
+            className="absolute inset-0 bg-[#020202] pointer-events-none"
           />
         </div>
 
-        {/* Top-to-Bottom Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/50 to-[#020202] pointer-events-none" />
-        
-        {/* Smooth Darkening Overlay on Scroll */}
-        <motion.div 
-          style={{ opacity: darkeningOpacity }}
-          className="absolute inset-0 bg-[#020202] pointer-events-none"
-        />
-      </div>
+        {/* Dunas Animadas - Camada fixa de background após o hero */}
+        <AnimatedDunes />
 
-      <Navbar />
+        <Navbar />
 
-<div className="flex flex-col gap-0 relative z-10">
+        {/* Conteúdo Principal - z-index maior que as dunas */}
+        <div className="flex flex-col gap-0 relative z-10">
           <Hero />
 
-          <div className="relative">
-            {/* Dunas animadas - transição do Hero para as seções */}
-            <div className="absolute inset-0 h-[150vh] pointer-events-none">
-              <AnimatedDunes />
+          {/* Seção "Quem Somos" */}
+          <section id="who-we-are" className="py-24 px-6 relative bg-transparent">
+            <div className="max-w-5xl mx-auto text-center space-y-6">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-xs md:text-sm uppercase tracking-[0.4em] text-white/50"
+              >
+                Quem Somos
+              </motion.p>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-3xl md:text-5xl font-black text-white"
+              >
+                Um estúdio compacto para equipes SaaS ambiciosas.
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-base md:text-lg text-white/55 max-w-3xl mx-auto"
+              >
+                Unimos estratégia de produto, engenharia de alta velocidade e motion UI cinematográfico para criar plataformas que parecem inevitáveis.
+              </motion.p>
             </div>
+          </section>
 
-            <div className="relative z-10">
-            <section id="who-we-are" className="py-24 px-6 relative z-10 bg-transparent">
-              <div className="max-w-5xl mx-auto text-center space-y-6">
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="text-xs md:text-sm uppercase tracking-[0.4em] text-white/50"
-                >
-                  Quem Somos
-                </motion.p>
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="text-3xl md:text-5xl font-black text-white"
-                >
-                  Um estúdio compacto para equipes SaaS ambiciosas.
-                </motion.h2>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 }}
-                  className="text-base md:text-lg text-white/55 max-w-3xl mx-auto"
-                >
-                  Unimos estratégia de produto, engenharia de alta velocidade e motion UI cinematográfico para criar plataformas que parecem inevitáveis.
-                </motion.p>
-              </div>
-            </section>
+          {/* Seções principais sobre as dunas */}
+          <Services />
+          <Process />
+          <Portfolio />
 
-            <div>
-              <Services />
-              <Process />
-              <Portfolio />
-            </div>
+          <Contact />
 
-            <Contact />
-
-            <div>
-              <LogoShowcase />
-              <Footer />
-            </div>
+          {/* Logo 3D e Footer - sem dunas */}
+          <div className="relative bg-black">
+            <LogoShowcase />
+            <Footer />
           </div>
         </div>
-      </div>
-    </main>
+      </main>
     </>
   );
 }

@@ -1,43 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { useRef, useState, useEffect, useMemo } from "react";
-
-interface DuneLayer {
-  id: number;
-  color: string;
-  opacity: number;
-  speed: number;
-  amplitude: number;
-  yOffset: number;
-}
-
-const duneLayers: DuneLayer[] = [
-  {
-    id: 1,
-    color: "#2d1b4e", // Roxo profundo
-    opacity: 0.9,
-    speed: 8,
-    amplitude: 30,
-    yOffset: 0,
-  },
-  {
-    id: 2,
-    color: "#1a0b2e", // Roxo mais escuro
-    opacity: 0.7,
-    speed: 12,
-    amplitude: 20,
-    yOffset: 50,
-  },
-  {
-    id: 3,
-    color: "#0f0518", // Quase preto
-    opacity: 0.8,
-    speed: 16,
-    amplitude: 40,
-    yOffset: 100,
-  },
-];
+import { motion, useReducedMotion } from "framer-motion";
+import { useState, useEffect, useMemo } from "react";
 
 // Partículas geradas deterministicamente para evitar hydration mismatch
 const generateParticles = () => [
@@ -56,11 +20,6 @@ const generateParticles = () => [
   { id: 12, x: 70, y: 10, size: 3.0, duration: 12, delay: 0.8 },
   { id: 13, x: 30, y: 85, size: 2.3, duration: 20, delay: 3.2 },
   { id: 14, x: 95, y: 50, size: 1.4, duration: 16, delay: 1.8 },
-  { id: 15, x: 20, y: 5, size: 2.9, duration: 14, delay: 2.2 },
-  { id: 16, x: 60, y: 65, size: 1.7, duration: 19, delay: 4.2 },
-  { id: 17, x: 40, y: 90, size: 3.3, duration: 11, delay: 0.3 },
-  { id: 18, x: 85, y: 15, size: 2.1, duration: 17, delay: 3.8 },
-  { id: 19, x: 12, y: 48, size: 1.3, duration: 13, delay: 1.6 },
 ];
 
 // Componente de partículas de areia digital
@@ -89,9 +48,9 @@ function DigitalSandParticles() {
           }}
           initial={{ y: 0, x: 0, opacity: 0 }}
           animate={{
-            y: [0, -100, 0],
-            x: [0, 15, -10, 0],
-            opacity: [0, 0.6, 0],
+            y: [0, -80, 0],
+            x: [0, 10, -10, 0],
+            opacity: [0, 0.5, 0],
           }}
           transition={{
             duration: particle.duration,
@@ -105,26 +64,9 @@ function DigitalSandParticles() {
   );
 }
 
-interface AnimatedDunesProps {
-  className?: string;
-}
-
-export default function AnimatedDunes({ className = "" }: AnimatedDunesProps) {
+export default function AnimatedDunes() {
   const [mounted, setMounted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  // Parallax suave baseado no scroll
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -30]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [0, -80]);
-
-  const parallaxValues = [y1, y2, y3];
 
   useEffect(() => {
     setMounted(true);
@@ -133,95 +75,99 @@ export default function AnimatedDunes({ className = "" }: AnimatedDunesProps) {
   if (!mounted) return null;
 
   return (
-    <div
-      ref={containerRef}
-      className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}
-      style={{ zIndex: 1 }}
+    <div 
+      className="fixed inset-0 pointer-events-none overflow-hidden" 
+      style={{ zIndex: 0 }}
     >
-      {/* Gradient overlay para transição do roxo do hero */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#1a0b2e] to-transparent z-10" />
-
-      {duneLayers.map((layer, index) => (
+      {/* Gradiente de transição do hero roxo */}
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#1a0b2e] to-transparent" />
+      
+      {/* Container das dunas */}
+      <div className="absolute inset-0">
+        {/* Camada 1 - Fundo (mais escura, mais lenta) */}
         <motion.div
-          key={layer.id}
-          className="absolute w-[200%] -left-[50%]"
-          style={{
-            y: prefersReducedMotion ? 0 : parallaxValues[index],
-            bottom: `${layer.yOffset}px`,
+          className="absolute bottom-0 w-[200%] -left-[50%]"
+          animate={prefersReducedMotion ? {} : {
+            x: [0, -50, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut",
           }}
         >
-          <svg
-            viewBox="0 0 1440 320"
-            className="w-full h-auto dune-layer"
-            preserveAspectRatio="none"
-          >
+          <svg viewBox="0 0 1440 400" className="w-full h-96" preserveAspectRatio="none">
             <defs>
-              <linearGradient
-                id={`duneGradient-${layer.id}`}
-                x1="0%"
-                y1="0%"
-                x2="0%"
-                y2="100%"
-              >
-                <stop
-                  offset="0%"
-                  stopColor={layer.color}
-                  stopOpacity={layer.opacity}
-                />
-                <stop
-                  offset="100%"
-                  stopColor={layer.color}
-                  stopOpacity={layer.opacity * 0.5}
-                />
+              <linearGradient id="duneGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#0f0518" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#0f0518" stopOpacity="0.4" />
               </linearGradient>
-              {/* Filtro de brilho sutil */}
-              <filter id={`duneGlow-${layer.id}`}>
-                <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-                <feMerge>
-                  <feMergeNode in="coloredBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
             </defs>
-
-            {prefersReducedMotion ? (
-              <path
-                fill={`url(#duneGradient-${layer.id})`}
-                filter={`url(#duneGlow-${layer.id})`}
-                d="M0,160 C320,300,420,100,720,160 C1020,220,1120,60,1440,160 L1440,320 L0,320 Z"
-              />
-            ) : (
-              <motion.path
-                fill={`url(#duneGradient-${layer.id})`}
-                filter={`url(#duneGlow-${layer.id})`}
-                d="M0,160 C320,300,420,100,720,160 C1020,220,1120,60,1440,160 L1440,320 L0,320 Z"
-                animate={{
-                  d: [
-                    "M0,160 C320,300,420,100,720,160 C1020,220,1120,60,1440,160 L1440,320 L0,320 Z",
-                    "M0,180 C320,80,420,280,720,140 C1020,60,1120,200,1440,140 L1440,320 L0,320 Z",
-                    "M0,140 C320,240,420,120,720,180 C1020,140,1120,100,1440,180 L1440,320 L0,320 Z",
-                    "M0,160 C320,300,420,100,720,160 C1020,220,1120,60,1440,160 L1440,320 L0,320 Z",
-                  ],
-                }}
-                transition={{
-                  duration: layer.speed,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            )}
+            <path
+              d="M0,200 C240,350 480,100 720,200 C960,300 1200,150 1440,200 L1440,400 L0,400 Z"
+              fill="url(#duneGrad1)"
+            />
           </svg>
         </motion.div>
-      ))}
 
-      {/* Accent ciano sutil nas bordas */}
-      <div className="absolute bottom-20 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
+        {/* Camada 2 - Meio */}
+        <motion.div
+          className="absolute bottom-0 w-[200%] -left-[50%]"
+          animate={prefersReducedMotion ? {} : {
+            x: [0, 30, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <svg viewBox="0 0 1440 350" className="w-full h-80" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="duneGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#1a0b2e" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#1a0b2e" stopOpacity="0.3" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M0,150 C360,280 540,80 720,180 C900,280 1080,120 1440,180 L1440,350 L0,350 Z"
+              fill="url(#duneGrad2)"
+            />
+          </svg>
+        </motion.div>
 
-      {/* Partículas de "areia digital" flutuando */}
+        {/* Camada 3 - Frente (mais visível, mais rápida) */}
+        <motion.div
+          className="absolute bottom-0 w-[200%] -left-[50%]"
+          animate={prefersReducedMotion ? {} : {
+            x: [0, -40, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <svg viewBox="0 0 1440 300" className="w-full h-64" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="duneGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#2d1b4e" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#2d1b4e" stopOpacity="0.2" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M0,100 C180,220 360,60 540,140 C720,220 900,80 1080,160 C1260,240 1350,120 1440,160 L1440,300 L0,300 Z"
+              fill="url(#duneGrad3)"
+            />
+          </svg>
+        </motion.div>
+      </div>
+
+      {/* Partículas de areia digital */}
       <DigitalSandParticles />
 
-      {/* Fade out para a logo 3D */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black via-black/80 to-transparent z-20" />
+      {/* Fade para preto no final (antes da logo 3D) */}
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black via-black/80 to-transparent" />
     </div>
   );
 }
