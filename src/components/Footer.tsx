@@ -2,8 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { Github, Linkedin, Twitter, ArrowUpRight } from "lucide-react";
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import { SmartLink } from "./SmartLink";
 
 // Componente de Dunas Animadas para o Footer - Posicionado no final
 function FooterDunes() {
@@ -106,6 +106,26 @@ function FooterDunes() {
   );
 }
 
+// Footer Links Data
+const footerLinks = {
+  estudio: [
+    { label: "Portfólio", href: "#portfolio" },
+    { label: "Serviços", href: "#services" },
+    { label: "Processo", href: "#process" },
+    { label: "Carreiras", href: "#contact" },
+  ],
+  recursos: [
+    { label: "Blog", href: "/blog" },
+    { label: "Case Studies", href: "/cases" },
+    { label: "Documentação", href: "/docs" },
+    { label: "Stack Tech", href: "/stack" },
+  ],
+  contato: [
+    { label: "hello@mezzold.studio", href: "mailto:hello@mezzold.studio" },
+    { label: "Agendar Reunião", href: "#contact" },
+  ],
+};
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
   
@@ -124,7 +144,7 @@ export function Footer() {
                 viewport={{ once: true }}
                 className="space-y-8"
               >
-                <Link href="/" className="inline-flex items-center gap-4 group">
+                <SmartLink href="#" className="inline-flex items-center gap-4 group">
                   <div className="w-14 h-14 bg-gradient-to-br from-purple-600/20 to-purple-900/20 border border-purple-500/20 flex items-center justify-center rounded-2xl group-hover:border-purple-500/40 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.2)] transition-all duration-500">
                     <span className="text-3xl font-black bg-gradient-to-br from-white to-purple-300 bg-clip-text text-transparent">M</span>
                   </div>
@@ -134,7 +154,7 @@ export function Footer() {
                     </span>
                     <span className="text-[9px] font-mono tracking-[0.5em] text-white/30 mt-1.5">DIGITAL ENGINEERING</span>
                   </div>
-                </Link>
+                </SmartLink>
 
                 <p className="text-white/50 max-w-md text-base leading-relaxed">
                   Engenharia de soluções digitais de alta performance. Transformamos visões ambiciosas em plataformas SaaS que definem o futuro.
@@ -143,20 +163,19 @@ export function Footer() {
                 {/* Social Links */}
                 <div className="flex gap-3 pt-4">
                   {[
-                    { Icon: Twitter, label: "Twitter" },
-                    { Icon: Github, label: "Github" },
-                    { Icon: Linkedin, label: "LinkedIn" },
-                  ].map(({ Icon, label }, i) => (
-                    <motion.a
-                      key={i}
-                      href="#"
-                      whileHover={{ y: -3 }}
-                      className="group relative p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.05] text-white/40 hover:text-white hover:border-purple-500/30 hover:bg-purple-500/5 transition-all duration-300"
-                      aria-label={label}
-                    >
-                      <Icon size={18} />
-                      <div className="absolute inset-0 rounded-xl bg-purple-500/10 opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
-                    </motion.a>
+                    { Icon: Twitter, label: "Twitter", href: "https://twitter.com" },
+                    { Icon: Github, label: "Github", href: "https://github.com" },
+                    { Icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com" },
+                  ].map(({ Icon, label, href }, i) => (
+                    <motion.div key={i} whileHover={{ y: -3 }}>
+                      <SmartLink
+                        href={href}
+                        className="group relative p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.05] text-white/40 hover:text-white hover:border-purple-500/30 hover:bg-purple-500/5 transition-all duration-300 block"
+                      >
+                        <Icon size={18} />
+                        <div className="absolute inset-0 rounded-xl bg-purple-500/10 opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
+                      </SmartLink>
+                    </motion.div>
                   ))}
                 </div>
               </motion.div>
@@ -177,15 +196,15 @@ export function Footer() {
                     Estúdio
                   </h4>
                   <ul className="space-y-4">
-                    {["Portfólio", "Serviços", "Processo", "Carreiras"].map((item, i) => (
+                    {footerLinks.estudio.map((link, i) => (
                       <li key={i}>
-                        <Link 
-                          href={`#${item.toLowerCase()}`}
+                        <SmartLink 
+                          href={link.href}
                           className="group flex items-center gap-2 text-white/40 hover:text-white text-sm transition-all duration-300"
                         >
                           <span className="w-0 h-px bg-purple-500 group-hover:w-4 transition-all duration-300" />
-                          {item}
-                        </Link>
+                          {link.label}
+                        </SmartLink>
                       </li>
                     ))}
                   </ul>
@@ -203,15 +222,16 @@ export function Footer() {
                     Recursos
                   </h4>
                   <ul className="space-y-4">
-                    {["Blog", "Case Studies", "Documentação", "Stack Tech"].map((item, i) => (
+                    {footerLinks.recursos.map((link, i) => (
                       <li key={i}>
-                        <Link 
-                          href="#"
+                        <SmartLink 
+                          href={link.href}
                           className="group flex items-center gap-2 text-white/40 hover:text-white text-sm transition-all duration-300"
                         >
                           <span className="w-0 h-px bg-emerald-500 group-hover:w-4 transition-all duration-300" />
-                          {item}
-                        </Link>
+                          {link.label}
+                          <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-50 transition-opacity" />
+                        </SmartLink>
                       </li>
                     ))}
                   </ul>
@@ -229,23 +249,19 @@ export function Footer() {
                     Contato
                   </h4>
                   <ul className="space-y-4">
-                    <li>
-                      <a 
-                        href="mailto:hello@mezzold.studio"
-                        className="text-white/40 hover:text-white text-sm transition-colors"
-                      >
-                        hello@mezzold.studio
-                      </a>
-                    </li>
-                    <li>
-                      <Link 
-                        href="#contact"
-                        className="group inline-flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors"
-                      >
-                        Agendar Reunião
-                        <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </Link>
-                    </li>
+                    {footerLinks.contato.map((link, i) => (
+                      <li key={i}>
+                        <SmartLink 
+                          href={link.href}
+                          className="group inline-flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors"
+                        >
+                          {link.label}
+                          {link.href.startsWith("#") && (
+                            <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                          )}
+                        </SmartLink>
+                      </li>
+                    ))}
                     <li className="pt-2">
                       <span className="text-[10px] font-mono text-white/20 uppercase tracking-wider">
                         Global / Remote First
@@ -269,13 +285,13 @@ export function Footer() {
                 <h3 className="text-lg font-bold text-white mb-2">Pronto para transformar sua visão?</h3>
                 <p className="text-sm text-white/40">Vamos conversar sobre o futuro do seu produto.</p>
               </div>
-              <Link
+              <SmartLink
                 href="#contact"
                 className="group inline-flex items-center gap-3 px-6 py-3 bg-white text-black rounded-full font-bold text-sm hover:bg-purple-400 hover:text-white transition-all duration-300"
               >
                 Iniciar Projeto
                 <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </Link>
+              </SmartLink>
             </div>
           </motion.div>
 
@@ -283,9 +299,9 @@ export function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center py-8 border-t border-white/[0.03] text-[10px] font-mono tracking-wider text-white/25">
             <p>© {currentYear} MEZZOLD STUDIO. TODOS OS DIREITOS RESERVADOS.</p>
             <div className="flex gap-8 mt-4 md:mt-0 uppercase">
-              <Link href="#" className="hover:text-white/60 transition-colors">Privacidade</Link>
-              <Link href="#" className="hover:text-white/60 transition-colors">Termos</Link>
-              <Link href="#" className="hover:text-white/60 transition-colors">Cookies</Link>
+              <SmartLink href="/privacy" className="hover:text-white/60 transition-colors">Privacidade</SmartLink>
+              <SmartLink href="/terms" className="hover:text-white/60 transition-colors">Termos</SmartLink>
+              <SmartLink href="/cookies" className="hover:text-white/60 transition-colors">Cookies</SmartLink>
             </div>
           </div>
         </div>
