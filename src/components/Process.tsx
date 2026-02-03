@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import { Search, PenTool, Code, Rocket } from "lucide-react";
 import { GlowingEffect } from "./ui/glowing-effect";
+import dynamic from "next/dynamic";
+
+const ProcessBackground = dynamic(() => import("./ui/ProcessBackground"), { ssr: false });
 
 const steps = [
   {
@@ -45,8 +48,11 @@ const steps = [
 
 export function Process() {
   return (
-    <section id="process" className="py-32 px-6 relative overflow-hidden bg-transparent">
-      <div className="max-w-7xl mx-auto">
+    <section id="process" className="py-32 px-6 relative overflow-hidden">
+      {/* Background Grid Cyberpunk */}
+      <ProcessBackground />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col items-center text-center mb-24 space-y-6">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
