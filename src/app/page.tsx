@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
-import { Navbar } from "@/components/Navbar";
+import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Portfolio } from "@/components/Portfolio";
 import { Services } from "@/components/Services";
@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import Lenis from "lenis";
 
 const Dither = dynamic(() => import("@/components/ui/dither"), { ssr: false });
-const AnimatedDunes = dynamic(() => import("@/components/ui/AnimatedDunes"), { ssr: false });
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -116,12 +115,10 @@ export default function Home() {
           />
         </div>
 
-        {/* Dunas Animadas - Camada fixa de background após o hero */}
-        <AnimatedDunes />
+        {/* Header fixo no topo */}
+        <Header />
 
-        <Navbar />
-
-        {/* Conteúdo Principal - z-index maior que as dunas */}
+        {/* Conteúdo Principal */}
         <div className="flex flex-col gap-0 relative z-10">
           <Hero />
 
@@ -156,14 +153,14 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Seções principais sobre as dunas */}
+          {/* Seções principais */}
           <Services />
           <Process />
           <Portfolio />
 
           <Contact />
 
-          {/* Logo 3D e Footer - sem dunas */}
+          {/* Logo 3D e Footer */}
           <div className="relative bg-black">
             <LogoShowcase />
             <Footer />
