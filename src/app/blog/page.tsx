@@ -138,15 +138,15 @@ export default function BlogPage() {
   const filteredPosts = blogPosts.filter((p) => !p.featured && (activeCategory === "all" || p.categoryId === activeCategory));
 
   return (
-    <main className="relative min-h-screen bg-[#020202] selection:bg-purple-500 selection:text-white overflow-hidden">
+    <main className="relative min-h-screen bg-[#020202] selection:bg-electric-red selection:text-white overflow-hidden">
       {/* Animated Background Effects */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <FloatingOrb className="top-0 left-1/4 w-[600px] h-[600px] bg-purple-500/10" />
         <FloatingOrb className="bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-500/8" />
         <FloatingOrb className="top-1/2 right-0 w-[400px] h-[400px] bg-pink-500/5" />
-        
+
         {/* Grid Pattern */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
@@ -179,7 +179,7 @@ export default function BlogPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center space-y-6 mb-16"
           >
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1 }}
@@ -210,11 +210,10 @@ export default function BlogPage() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 ${
-                  activeCategory === cat.id
+                className={`px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 ${activeCategory === cat.id
                     ? "bg-white text-black"
                     : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white/70 border border-white/5"
-                }`}
+                  }`}
               >
                 {cat.label}
                 <span className={`ml-2 ${activeCategory === cat.id ? "text-black/50" : "text-white/30"}`}>
@@ -256,7 +255,7 @@ export default function BlogPage() {
                       <p className="text-white/50 text-base leading-relaxed">
                         {featuredPost.excerpt}
                       </p>
-                      
+
                       {/* Tags */}
                       <div className="flex flex-wrap gap-2">
                         {featuredPost.tags?.map((tag) => (
@@ -265,7 +264,7 @@ export default function BlogPage() {
                           </span>
                         ))}
                       </div>
-                      
+
                       <div className="flex items-center gap-6 text-sm text-white/40 pt-4 border-t border-white/5">
                         <span className="flex items-center gap-2">
                           <User className="w-4 h-4" />
@@ -289,11 +288,11 @@ export default function BlogPage() {
                         <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                       </button>
                     </div>
-                    
+
                     {/* Visual Side */}
                     <div className={`relative bg-gradient-to-br ${featuredPost.gradient} min-h-[350px] lg:min-h-0`}>
                       <div className="absolute inset-0 bg-black/10" />
-                      
+
                       {/* Animated Pattern */}
                       <div className="absolute inset-0 overflow-hidden">
                         <motion.div
@@ -306,9 +305,9 @@ export default function BlogPage() {
                           }}
                         />
                       </div>
-                      
+
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <motion.div 
+                        <motion.div
                           className="text-center space-y-4"
                           initial={{ scale: 0.9, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
@@ -345,7 +344,7 @@ export default function BlogPage() {
                     {/* Image Placeholder */}
                     <div className={`relative h-48 bg-gradient-to-br ${post.gradient} overflow-hidden`}>
                       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
-                      
+
                       {/* Animated Grid */}
                       <motion.div
                         className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity"
@@ -356,20 +355,20 @@ export default function BlogPage() {
                           backgroundSize: "200% 200%",
                         }}
                       />
-                      
+
                       <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-60 transition-all duration-500 group-hover:scale-110">
                         <div className="w-14 h-14 rounded-xl border border-white/30 flex items-center justify-center backdrop-blur-sm">
                           <Sparkles className="w-6 h-6 text-white" />
                         </div>
                       </div>
-                      
+
                       {/* Category Badge */}
                       <div className="absolute top-4 left-4">
                         <span className={`px-3 py-1 rounded-full border text-[9px] uppercase tracking-wider backdrop-blur-sm ${colors.text} ${colors.border} ${colors.bg}`}>
                           {post.category}
                         </span>
                       </div>
-                      
+
                       {/* Date Badge */}
                       <div className="absolute top-4 right-4">
                         <span className="text-[9px] font-mono text-white/50 bg-black/30 px-2 py-1 rounded backdrop-blur-sm">
@@ -386,7 +385,7 @@ export default function BlogPage() {
                       <p className="text-sm text-white/40 leading-relaxed line-clamp-2">
                         {post.excerpt}
                       </p>
-                      
+
                       {/* Tags */}
                       <div className="flex flex-wrap gap-1">
                         {post.tags?.slice(0, 2).map((tag) => (
@@ -395,7 +394,7 @@ export default function BlogPage() {
                           </span>
                         ))}
                       </div>
-                      
+
                       <div className="flex items-center justify-between pt-4 border-t border-white/5">
                         <div className="flex items-center gap-4 text-xs text-white/30">
                           <span className="flex items-center gap-1">
@@ -448,11 +447,11 @@ export default function BlogPage() {
           >
             <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-r from-purple-900/20 via-[#080808] to-cyan-900/20 p-8 md:p-12 overflow-hidden">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.08)_0%,transparent_70%)]" />
-              
+
               {/* Decorative Elements */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
               <div className="absolute bottom-0 left-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl" />
-              
+
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="text-center md:text-left">
                   <h3 className="text-2xl font-bold text-white mb-2">

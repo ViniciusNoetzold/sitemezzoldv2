@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Search, PenTool, Code, Rocket } from "lucide-react";
 import { GlowingEffect } from "./ui/glowing-effect";
+import { SmartLink } from "./SmartLink";
 import dynamic from "next/dynamic";
 
 const ProcessBackground = dynamic(() => import("./ui/ProcessBackground"), { ssr: false });
@@ -51,7 +52,7 @@ export function Process() {
     <section id="process" className="py-32 px-6 relative overflow-hidden">
       {/* Background Grid Cyberpunk */}
       <ProcessBackground />
-      
+
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col items-center text-center mb-24 space-y-6">
           <motion.p
@@ -91,7 +92,7 @@ export function Process() {
                   inactiveZone={0.01}
                   borderWidth={1.2}
                 />
-                
+
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-12">
                     <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${step.color} border border-white/5 flex items-center justify-center text-white/80 group-hover:scale-110 transition-transform duration-500 group-hover:text-white`}>
@@ -109,42 +110,52 @@ export function Process() {
                       {step.title}
                     </h3>
                   </div>
-                  
+
                   <p className="text-white/40 text-sm leading-relaxed font-medium">
                     {step.description}
                   </p>
                 </div>
 
                 {/* Decorative Bottom Glow */}
-                <div 
+                <div
                   className="absolute bottom-0 left-0 right-0 h-24 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                  style={{ 
-                    background: `linear-gradient(to top, ${step.glowColor}, transparent)` 
+                  style={{
+                    background: `linear-gradient(to top, ${step.glowColor}, transparent)`
                   }}
                 />
               </div>
             </motion.div>
           ))}
         </div>
-        
-        {/* Footnote */}
+
+        {/* CTA Banner */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="mt-20 flex justify-center"
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="mt-24 flex justify-center"
         >
-          <div className="px-6 py-3 rounded-full border border-white/5 bg-white/5 backdrop-blur-md flex items-center gap-4">
-            <div className="flex -space-x-2">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="w-6 h-6 rounded-full border-2 border-black bg-neutral-800" />
-              ))}
+          <SmartLink href="#contact" className="relative group px-8 py-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-2xl flex items-center gap-6 hover:border-emerald-green/20 transition-all duration-700 cursor-pointer hover:shadow-[0_0_40px_rgba(16,185,129,0.06)]">
+            {/* Subtle gradient accent line */}
+            <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-emerald-green/30 to-transparent" />
+
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 rounded-full bg-emerald-green animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+              <p className="text-xs uppercase tracking-[0.3em] text-white/40 font-mono">
+                Pronto para escalar?
+              </p>
             </div>
-            <p className="text-[10px] uppercase tracking-widest text-white/40">
-              PRONTO PARA ESCALAR? <span className="text-white ml-2 underline cursor-pointer hover:text-electric-red transition-colors">INICIAR PROJETO</span>
-            </p>
-          </div>
+
+            <div className="h-4 w-px bg-white/10" />
+
+            <span className="text-sm font-semibold text-white/90 group-hover:text-emerald-green transition-colors duration-500 flex items-center gap-2">
+              Iniciar Projeto
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </span>
+          </SmartLink>
         </motion.div>
       </div>
     </section>
