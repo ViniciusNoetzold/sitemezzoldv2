@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Bebas_Neue } from "next/font/google";
 import "./globals.css";
-import { VisualEditsMessenger } from "orchids-visual-edits";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
@@ -42,7 +41,6 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <VisualEditsMessenger />
         </ThemeProvider>
       </body>
     </html>

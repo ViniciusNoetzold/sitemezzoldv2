@@ -1,59 +1,72 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { AnimatedCube } from "./ui/AnimatedCube";
-import { AnimatedNetwork } from "./ui/AnimatedNetwork";
-import { AnimatedGear } from "./ui/AnimatedGear";
 import { GlowingEffect } from "./ui/glowing-effect";
 
-const services = [
+type Spec = {
+  label: string;
+  value: string;
+  isStatus?: boolean;
+  isLink?: boolean;
+  isGreen?: boolean;
+};
+
+type Service = {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  color: string;
+  accentColor: string;
+  borderColor: string;
+  specs: Spec[];
+};
+
+const services: Service[] = [
   {
     id: "01",
-    title: "Core Micro-SaaS Systems",
+    title: "Micro SaaS & Ferramentas",
     subtitle: "AGILE_UNIT",
-    description: "Engenharia de precisão para MVPs e micro-produtos escaláveis. Desenvolvemos arquiteturas lean que priorizam velocidade de carregamento e conversão através de processos otimizados.",
+    description: "Criamos micro SaaS e pequenas aplicações sob medida para otimizar operações específicas. Desenvolvemos produtos lean, funcionais e resolutivos para validar e tracionar rápido.",
     color: "cyan",
     accentColor: "text-cyan-400",
     borderColor: "group-hover:border-cyan-500/30",
     specs: [
-      { label: "ARCHITECTURE", value: "Edge Computing" },
-      { label: "LATENCY", value: "< 30ms Avg" },
-      { label: "DEPLOY", value: "Automated CI/CD" },
-      { label: "STATUS", value: "Production_Ready", isStatus: true },
+      { label: "SCOPE", value: "Pequenas Soluções" },
+      { label: "ARCHITECTURE", value: "Serverless & Edge" },
+      { label: "DELIVERY", value: "Sprints Ágeis" },
+      { label: "TIME_TO_MARKET", value: "Ultra Rápido", isStatus: true },
     ],
-    animation: <AnimatedCube />,
   },
   {
     id: "02",
-    title: "Enterprise SaaS Ecosystems",
-    subtitle: "ENTERPRISE_CORE",
-    description: "Plataformas robustas e multi-tenant desenhadas para escala global. Infraestrutura resiliente com foco em segurança de dados e alta disponibilidade operacional em tempo real.",
+    title: "Websites & Portfólios",
+    subtitle: "WEB_EXPERIENCE",
+    description: "Plataformas digitais imersivas para marcas, produtos e criativos. Unimos design Awwwards-level com engenharia de ponta para criar sites que não apenas convertem, mas fascinam.",
     color: "blue",
     accentColor: "text-blue-400",
     borderColor: "group-hover:border-blue-500/30",
     specs: [
-      { label: "INFRASTRUCTURE", value: "Distributed K8s" },
-      { label: "THROUGHPUT", value: "50k+ Req/m" },
-      { label: "DB_LAYER", value: "Global Replication" },
-      { label: "COMPLIANCE", value: "SOC2 Compliant", isLink: true },
+      { label: "AESTHETICS", value: "Design Premium" },
+      { label: "INTERACTIONS", value: "Framer Motion" },
+      { label: "PERFORMANCE", value: "Ultra Otimizado" },
+      { label: "VIBE", value: "Visual Impact", isLink: true },
     ],
-    animation: <AnimatedNetwork />,
   },
   {
     id: "03",
-    title: "Deep Process Automation",
-    subtitle: "PIPELINE_FLOW",
-    description: "Automações inteligentes que conectam seu ecossistema digital. Workflows autônomos que eliminam gargalos operacionais e reduzem custos drásticos em escala industrial.",
+    title: "Automação & Chatbots",
+    subtitle: "AI_WORKFLOWS",
+    description: "Transforme operações lentas em fluxos instantâneos. Integramos IA, automações complexas e chatbots customizados para que sua equipe foque apenas no que realmente importa.",
     color: "emerald",
     accentColor: "text-emerald-400",
     borderColor: "group-hover:border-emerald-500/30",
     specs: [
-      { label: "ENGINE", value: "Event-Driven Logic" },
-      { label: "RELIABILITY", value: "99.99% Uptime" },
-      { label: "CONNECTIVITY", value: "Custom Webhooks" },
-      { label: "EXECUTION", value: "Fully Autonomous", isGreen: true },
+      { label: "INTEGRATION", value: "APIs & Webhooks" },
+      { label: "AI_AGENTS", value: "LLMs Customizados" },
+      { label: "ATTENDANCE", value: "Omnichannel Bot" },
+      { label: "EFFICIENCY", value: "24/7 Autônomo", isGreen: true },
     ],
-    animation: <AnimatedGear />,
   },
 ];
 
@@ -147,7 +160,6 @@ export function Services() {
               <div className="relative bg-black/40 overflow-hidden min-h-[300px] md:min-h-[450px]">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_70%)] opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
                 <div className="absolute inset-0 z-10 transition-transform duration-700 group-hover:scale-110">
-                  {service.animation}
                 </div>
 
                 {/* Decorative Elements */}
